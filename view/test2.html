@@ -1,0 +1,70 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/3-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="./ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="./ref/iconfont/iconfont.css">
+</head>
+<body>
+<div id="test">
+    cookies:{{cookies}}<br>
+    session:{{session}}
+</div>
+
+</body>
+<script src="./ref/vue/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#test",
+        data:{
+
+            session:''
+        },
+        methods:{
+            getData:function(){
+                $.ajax({
+                    url: "http://127.0.0.1/swustcnes/public/index.php/index/index/index",
+                    async: false
+                });
+            },
+            setData:function(){
+                vm.cookies = 10;
+                $.ajax({
+                    url: "http://127.0.0.1/swustcnes/public/index.php/index/index/index",
+                    async: false,
+                    success:function (res) {
+                        alert("xx");
+                    }
+                });
+            }
+        },
+        created:function () {
+
+        },
+        mounted:function () {
+
+        },
+        computed:{
+            cookies:{
+                get:function () {
+                    return 10;
+                }
+            }
+
+        }
+    });
+
+</script>
+</html>

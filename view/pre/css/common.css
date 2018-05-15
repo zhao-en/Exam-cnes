@@ -1,0 +1,34 @@
+/**
+ * Author : en_zhao
+ * Date   : 2018/4/22
+ * Content: nav.js
+ */
+
+.row {
+    margin: 10px;
+}
+.head {
+    height: 90px;
+    background-color: #eee;
+}
+.this_navbar{
+    height: 40px
+}
+
+.this_zhuxiao{
+    font-size: small;color: green;margin-left: 15px
+}
+.this_dangqianweizhi{
+    color: black;font-weight: bolder
+}
+.this_erjicaidan{
+    font-weight: bolder;font-size: small
+}
+.this_gerenxinxi{
+    border-radius:10px;
+    margin-left: 10px;
+}
+.this_kaoshimokuai{
+    margin-left: 10px;
+    border-radius:10px
+}

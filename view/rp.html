@@ -1,0 +1,158 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/7-->
+<!--Content: 重置密码页面-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="./ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="./ref/iconfont/iconfont.css">
+
+    <style>
+        .row {
+            margin: 10px;
+        }
+        .head {
+            height: 90px;
+            background-color: #eee;
+        }
+        /*
+         *PC
+         */
+        @media (max-width:992px){
+            .login_left_img {
+                display:none;
+            }
+            .input_login_phone{
+                background-color: #eee;
+                padding-bottom: 20px;
+                box-shadow: 10px 10px 5px #888888;
+                border-radius:10px;
+            }
+        }
+        /*
+         * phone
+         */
+        @media (min-width:992px){
+            .input_login{
+                background-color: #eee;
+                padding-bottom: 100px;
+                box-shadow: 10px 10px 5px #888888;
+                border-radius:25px;
+            }
+        }
+        .input-group{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<!--header-->
+<div class="row">
+    <div class="col-lg-6
+                col-md-6
+                col-sm-6
+                col-xs-12 text-center head">
+        <img src="img/swust-logo.png" alt="">
+    </div>
+    <div class="col-lg-6
+                col-md-6
+                col-sm-6
+                col-xs-12 text-center head">
+        <h2>SWUSTCNES</h2>
+    </div>
+</div>
+
+
+<!--内容-->
+<div class="row" id = 'rp'>
+    <div class="row">
+        <div class="col-lg-4
+                col-md-1
+                col-sm-1
+                col-xs-12"></div>
+        <div class="col-lg-4
+                col-md-4
+                col-sm-4
+                col-xs-12">
+            <div class="row input_login_phone input_login">
+                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12">
+                    <h3>重置密码</h3>
+                </div>
+                <br><br><br>
+                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
+                            input-group">
+                    <span class="input-group-addon" style="background-color:white;"><i class="icon iconfont icon-mima"></i></span>
+                    <input type="password" class="form-control" v-model="pwd" placeholder="请输入密码">
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
+                            input-group">
+                    <span class="input-group-addon" style="background-color:white;"><i class="icon iconfont  icon-mima"></i></span>
+                    <input type="password" class="form-control" v-model="pwd2" placeholder="请再次输入密码">
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
+                            input-group text-right">
+                    <button class="btn btn-info" v-on:click="tijiaogenggai">提交更改</button>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    <a class="btn btn-info" href="./login.html">返回登录</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+<!--footer-->
+<div class="row">
+    <nav class="navbar navbar-default navbar-fixed-bottom text-center" role="navigation">
+        <a class="na" href="#">版权所有&copy;2017西南科技大学计算机科学与技术学院</a><br>
+        <span class="na1">教育信息化推进办公室技术支持&nbsp;电话:0816-15280905869</span>
+    </nav>
+</div>
+
+<!--vue引入-->
+<script src="ref/vue/vue.js"></script>
+<!--模态框div引入-->
+<script src="common/modal.js"></script>
+<!--工具函数引入-->
+<script src="common/tools.js"></script>
+
+<script>
+    var vm = new Vue({
+        el:"#rp",
+        data:{
+            'pwd':'',
+            'pwd2':''
+        },
+        methods:{
+            tijiaogenggai(){
+                if(vm.pwd !== vm.pwd2){
+                    tools.warningC("提示",'两次密码不一致');
+                }
+
+                tools.postFetch('admin/Pwd/resetPWD','PWD='+vm.pwd+'&Email='+tools.getQueryString('Email')+'&Code='+tools.getQueryString('Code'),function (data) {
+                        //数据请求成功
+                    if(data.res === true){
+                        tools.warning("提示","密码重置成功,3s后自动跳转...");
+                        setTimeout("window.location.href = 'login.html'",3000);
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

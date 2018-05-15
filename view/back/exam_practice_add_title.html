@@ -1,0 +1,523 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/1-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 50px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 50px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+        /*复选框样式*/
+        .this_checkbox input[type='checkbox']{
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+        }
+        .this_checkbox {
+            position: relative;
+            height: 30px;
+            margin-top: 5px;
+        }
+        .this_checkbox label {
+            position: relative;
+            left: 30px;
+            top: 0;
+            height: 20px;
+            line-height: 20px;
+        }
+        .this_checkbox label:before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+        }
+
+        .this_checkbox label:after {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: 0;
+            border-right: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            background: #fff;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+        }
+
+        .this_checkbox input[type='checkbox']:checked + label:before {
+            background: #4cd764;
+            border-color: #4cd764;
+        }
+
+        .this_checkbox input[type='checkbox']:checked + label:after {
+            background: #4cd764;
+        }
+        /**
+         *图片放大缩小样式
+         */
+        .over {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .tempContainer {
+            position: fixed;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            text-align: center;
+            z-index: 101;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+<!--图片放大层-->
+<div class="row">
+    <div>
+        <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+            <div class="over"></div><!--背景层-->
+            <img title="" id="xuanze_lg_img" class="" style="height: 0px;display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+            <div class="over"></div><!--背景层-->
+            <img id="panduan_lg_img" class="" style="height: 0px;display:none;">
+        </div>
+    </div>
+    <div>
+        <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+            <div class="over"></div><!--背景层-->
+            <img title="" id="wenda_lg_img" class="" style="height: 0px;display:none;">
+        </div>
+    </div>
+</div>
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考试管理</li>
+        <li class="active">添加习题</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row" id="this_content">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12">
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">范围选择</span>
+                    <select class="form-control" name="fanwei" id="fanwei" style="width: 70%;display: inline">
+                        <option>第1章&nbsp;概述</option>
+                        <option>第2章&nbsp;物理层</option>
+                        <option>第3章&nbsp;数据链路层</option>
+                        <option>第4章&nbsp;网络层</option>
+                        <option>第5章&nbsp;运输层</option>
+                        <option>第6章&nbsp;应用层</option>
+                        <option>第7章&nbsp;网络安全</option>
+                        <option>第8章&nbsp;因特网上的音频/视频服务</option>
+                        <option>第9章&nbsp;无线网络和移动网络</option>
+                        <option>第10章&nbsp;下一代因特网</option>
+                        <option>CCNA</option>
+                        <option>CCNP</option>
+                        <option>HCNA</option>
+                        <option>HCNP</option>
+                    </select>
+                    <!--<div class="this_checkbox" >-->
+                        <!--<span><input id="checkbox1" type="checkbox" checked><label for="checkbox1" ></label></span>-->
+                    <!--</div>-->
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">题型选择</span>
+                    <select class="form-control" v-on:change="be_tixing" v-model="tixingID" name="tixing" id="tixing" style="width: 70%;display: inline">
+                        <option value="1">选择题目</option>
+                        <option value="2">判断题目</option>
+                        <option value="3">问答题目</option>
+                    </select>
+                    <!--<div class="this_checkbox" >-->
+                        <!--<span><input id="checkbox2" type="checkbox" checked><label for="checkbox2" ></label></span>-->
+                    <!--</div>-->
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">考点选择</span>
+                    <select class="form-control" name="zhishidian" id="zhishidian" style="width: 70%;display: inline">
+                        <option>路由</option>
+                        <option>交换机</option>
+                        <option>IP分配</option>
+                    </select>
+                    <!--<div class="this_checkbox" >-->
+                        <!--<span><input id="checkbox3" type="checkbox" checked><label for="checkbox3" ></label></span>-->
+                    <!--</div>-->
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">难度系数</span>
+                    <select class="form-control" name="nanduxishu" id="nanduxishu" style="width: 70%;display: inline">
+                        <option>高</option>
+                        <option>中</option>
+                        <option>低</option>
+                    </select>
+                    <!--<div class="this_checkbox" >-->
+                        <!--<span><input id="checkbox4" type="checkbox" checked><label for="checkbox4" ></label></span>-->
+                    <!--</div>-->
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <!--选择-->
+    <div id="xuanze">
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-2" id="title_zhanshi">
+                    <span style="color: red;font-size: small">题目题干</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_timutigan}}<br>
+                    <span style="color: red">题目选项</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_timuxuanxiang}}</span><br>
+                    <span style="color: red">参考答案</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_cankaodaan}}<br>
+                    <span style="color: red">答案解析</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_daanjiexi}}<br>
+                    <span style="color: red">是否多选</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_shifouduoxuan}}<br>
+                    <span style="color: red">题目图片</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" class="title_image" id="xuanze_img" onclick="javascript:$('#xuanze_lg_img').click();"><br>
+                </div>
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-info" onclick="add()">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="xuanze_timutigan">题目题干:&nbsp</label><br>
+                        <textarea name="xuanze_timutigan" v-model="xuanze_timutigan" id="xuanze_timutigan" cols="30"
+                                  rows="5" placeholder="注意：这里填写题目题干"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="xuanze_timuxuanxiang">题目选项:&nbsp</label><br>
+                        <textarea name="xuanze_timuxuanxiang" v-model="xuanze_timuxuanxiang" id="xuanze_timuxuanxiang"
+                                  cols="30" rows="5" placeholder="注意：每行一个选项"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="xuanze_cankaodaan">参考答案:&nbsp</label><br>
+                        <textarea name="xuanze_cankaodaan" v-model="xuanze_cankaodaan" id="xuanze_cankaodaan" cols="30"
+                                  rows="5" placeholder="注意：参考答案"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="xuanze_daanjiexi">答案解析:&nbsp</label><br>
+                        <textarea name="xuanze_daanjiexi" v-model="xuanze_daanjiexi" id="xuanze_daanjiexi" cols="30"
+                                  rows="5" placeholder="注意：这里填写答案解析"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="xuanze_shifouduoxuan">是否多选:&nbsp&nbsp</label>
+                        <input name="xuanze_shifouduoxuan" id="xuanze_shifouduoxuan" type="checkbox"
+                               v-on:change="judge_xuanze_shifouduoxuan">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0">
+                    <div class="">
+                        <button class="btn btn-info btn-xs" onclick="javascript:$('#xuanze_shangchuantupian').click();">
+                            上传图片
+                        </button>
+                        <input class="hidden" type="file" name="xuanze_shangchuantupian" v-on:change="upload_image"
+                               id="xuanze_shangchuantupian">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--判断-->
+    <div id="panduan" style="display: none">
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-2" id="title_panduan">
+                    <span style="color: red;font-size: small">题目题干</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{panduan_timutigan}}<br>
+                    <span style="color: red">参考答案</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{panduan_cankaodaan}}<br>
+                    <span style="color: red">答案解析</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{panduan_daanjiexi}}<br>
+                    <span style="color: red">题目图片</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" class="title_image" id="panduan_img" onclick="javascript:$('#panduan_lg_img').click();"><br>
+                </div>
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-info" onclick="add()">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="panduan_timutigan">题目题干:&nbsp</label><br>
+                        <textarea name="panduan_timutigan" v-model="panduan_timutigan" id="panduan_timutigan" cols="30"
+                                  rows="5" placeholder="注意：这里填写题目题干"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="panduan_cankaodaan">参考答案:&nbsp</label><br>
+                        <textarea name="panduan_cankaodaan" v-model="panduan_cankaodaan" id="panduan_cankaodaan" cols="30"
+                                  rows="5" placeholder="注意：参考答案"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="panduan_daanjiexi">答案解析:&nbsp</label><br>
+                        <textarea name="panduan_daanjiexi" v-model="panduan_daanjiexi" id="panduan_daanjiexi" cols="30"
+                                  rows="5" placeholder="注意：这里填写答案解析"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0">
+                    <div class="">
+                        <button class="btn btn-info btn-xs" onclick="javascript:$('#panduan_shangchuantupian').click();">
+                            上传图片
+                        </button>
+                        <input class="hidden" type="file" name="panduan_shangchuantupian" v-on:change="upload_image"
+                               id="panduan_shangchuantupian">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--问答-->
+    <div id="wenda" style="display: none">
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-2" id="title_wenda">
+                    <span style="color: red;font-size: small">题目题干</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{wenda_timutigan}}<br>
+                    <span style="color: red">参考答案</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{wenda_cankaodaan}}<br>
+                    <span style="color: red">答案解析</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{wenda_daanjiexi}}<br>
+                    <span style="color: red">题目图片</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" id="wenda_img" onclick="javascript:$('#wenda_lg_img').click();"><br>
+                </div>
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-info" onclick="add()">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="wenda_timutigan">题目题干:&nbsp</label><br>
+                        <textarea name="wenda_timutigan" v-model="wenda_timutigan" id="wenda_timutigan" cols="30"
+                                  rows="5" placeholder="注意：这里填写题目题干"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="wenda_cankaodaan">参考答案:&nbsp</label><br>
+                        <textarea name="wenda_cankaodaan" v-model="wenda_cankaodaan" id="wenda_cankaodaan" cols="30"
+                                  rows="5" placeholder="注意：参考答案"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 ">
+                    <div class="input-group">
+                        <label for="wenda_daanjiexi">答案解析:&nbsp</label><br>
+                        <textarea name="wenda_daanjiexi" v-model="wenda_daanjiexi" id="wenda_daanjiexi" cols="30"
+                                  rows="5" placeholder="注意：这里填写答案解析"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0">
+                    <div class="">
+                        <button class="btn btn-info btn-xs" onclick="javascript:$('#wenda_shangchuantupian').click();">
+                            上传图片
+                        </button>
+                        <input class="hidden" type="file" name="wenda_shangchuantupian" v-on:change="upload_image"
+                               id="wenda_shangchuantupian">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="space_pc space_phone">&nbsp;</div>
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<!--放大缩小js-->
+<script src="./js/enPictures.js"></script>
+<script src="./../ref/vue/vue.js"></script>
+<script src="./js/tools.js"></script>
+
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:'#this_content',
+        data:{
+            //题型ID
+            tixingID:"1",
+            //选择
+            xuanze_timutigan:'',
+            xuanze_timuxuanxiang:'',
+            xuanze_cankaodaan:'',
+            xuanze_daanjiexi:'',
+            xuanze_shifouduoxuan:'否',
+            //判断
+            panduan_timutigan:'',
+            panduan_cankaodaan:'',
+            panduan_daanjiexi:'',
+            //问答
+            wenda_timutigan:'',
+            wenda_cankaodaan:'',
+            wenda_daanjiexi:''
+
+        },
+        methods:{
+            //
+            be_tixing(){
+                var xuanze_doc = $("#xuanze");
+                var panduan_doc = $("#panduan");
+                var wenda_doc = $("#wenda");
+                xuanze_doc.hide();
+                panduan_doc.hide();
+                wenda_doc.hide();
+                switch (this.tixingID) {
+                    case "1":
+                        xuanze_doc.show();
+                        break;
+                    case "2":
+                        panduan_doc.show();
+                        break;
+                    case "3":
+                        wenda_doc.show();
+                        break;
+                }
+            },
+            //选择题目是否多选
+            judge_xuanze_shifouduoxuan(){
+                if($('#xuanze_shifouduoxuan').is(':checked')){
+                    vm.xuanze_shifouduoxuan = "是";
+                }else{
+                    vm.xuanze_shifouduoxuan = "否";
+                }
+            },
+            //图片预览
+            upload_image(){
+                //静态字典
+                var temp = {"1":'xuanze',"2":"panduan","3":"wenda"};
+                //获取图片的路径，该路径不是图片在本地的路径
+                var obj_doc = $('#' + temp[this.tixingID] + "_shangchuantupian");
+                var objUrl = tools.getObjectURL(obj_doc[0].files[0]) ;
+                //图片预览
+                if (objUrl) {
+                    $("#"+temp[this.tixingID]+"_img").attr({"src":objUrl,"width":"100px","height":"100px"});
+                    //放大
+                    $("#"+temp[this.tixingID]+"_lg_img").attr({"src":objUrl});
+                }
+                tools.getImageSize('xuanze_shangchuantupian',function (obj) {
+                    /**
+                     * TODO 图片大小判定
+                     */
+                });
+
+            }
+        }
+    });
+</script>
+</body>

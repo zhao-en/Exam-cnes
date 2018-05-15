@@ -1,0 +1,207 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/1-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="./common/permission.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+
+
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 50px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 50px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+        /**
+         *图片放大缩小样式
+         */
+        .over {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .tempContainer {
+            position: fixed;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            text-align: center;
+            z-index: 101;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+<!--图片放大层-->
+<div class="row">
+    <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+        <div class="over"></div><!--背景层-->
+        <img id="notice_lg_img" style="height: 0px;display:none;">
+    </div>
+</div>
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人信息</li>
+        <li class="active">信息查看</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row" id="notice_content">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
+                <span class="input-group-btn"><button class="btn btn-default">公告标题</button></span>
+                <input class="form-control" v-model="title" type="text" name="file_name">
+            </div>
+            <br>
+            <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
+                <span>公告内容</span>
+                <textarea class="form-control" v-model="content" rows="5" name="file_name"></textarea>
+            </div>
+            <br>
+            <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
+                <span class="btn btn-info btn-xs" onclick="javascript:$('#image_upload').click()">上传图片</span>
+                <input style="display: none" id="image_upload" type="file" v-on:change="upload_image" class="form-control">
+            </div>
+            <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
+                <img class="img-thumbnail" id="notice_img" alt="" onclick="javascript:$('#notice_lg_img').click();">
+            </div>
+            <br>
+            <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group text-right">
+                <button class="btn btn-info" v-on:click="submit">发布</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="space_pc space_phone">&nbsp</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./common/nav.js"></script>
+<!--<script src="./common/permission.js"></script>-->
+<script src="./js/enPictures.js"></script>
+
+
+
+<script>
+    var vm = new Vue({
+        el:"#notice_content",
+        data:{
+            'title':'',
+            'content':'',
+            'src':''
+        },
+        methods:{
+            //图片预览
+            upload_image(){
+                //获取图片的路径，该路径不是图片在本地的路径
+                var obj_doc = $('#image_upload');
+                vm.src = obj_doc[0].files[0];
+                var objUrl = tools.getObjectURL(obj_doc[0].files[0]) ;
+                //图片预览
+                if (objUrl) {
+                    $("#notice_img").attr({"src":objUrl,"width":"100px","height":"100px"});
+                    //放大
+                    $("#notice_lg_img").attr({"src":objUrl});
+                }
+                tools.getImageSize('image_upload',function (obj) {
+                    if(obj.width > 500 || obj.height > 500){
+                        tools.warningC("提示","图片上传文件比例不符合规定（height<500且weight<500）");
+                    }else if(obj.size > 2048){
+                        tools.warningC("提示","图片上传文件大于2M");
+                    }else if(obj.type !== 'jpg' || obj.type !== 'jpeg' || obj.type !== 'JPG' || obj.type !== 'JPEG' ||
+                        obj.type !== 'png' || obj.type !== 'PNG'){
+                        tools.warningC("提示","图片上传类型错误");
+                    }
+                });
+            },
+            submit(){
+                if(tools.isNull(vm.title) || tools.isNull(vm.content)){
+                    tools.warningC("提示","标题和内容不能为空")
+                }else{
+                    var formData = new FormData();
+                    formData.append('Title', vm.title);
+                    formData.append('Content', vm.content);
+                    formData.append('Img', vm.src);
+
+                    tools.imgFetch('notice/Notice/add?XDEBUG_SESSION_START=14658',formData,function (data) {
+                        if(data.res === true){
+                            tools.warningC("提示",data.msg);
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+            }
+        }
+    });
+</script>
+<!--引入其他js-->
+</body>

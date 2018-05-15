@@ -1,0 +1,190 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/4/23-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="./common/permission.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 10px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 10px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人信息</li>
+        <li class="active">信息查看</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row" id="info">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-6  col-sm-12 col-xs-12">
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">姓名</span>
+                    <input type="text" v-model="name" class="form-control" placeholder="请输入姓名">
+                </div>
+                <div class="space_pc space_phone"></div>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">专业</span>
+                    <input type="text" v-model="major" class="form-control" placeholder="请输入专业">
+                </div>
+                <div class="space_pc space_phone"></div>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">账号</span>
+                    <input type="text" readonly v-model="SNO" class="form-control" placeholder="请输入账号">
+                </div>
+                <div class="space_pc space_phone"></div>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">邮箱</span>
+                    <input type="text"  readonly v-model="email" class="form-control" placeholder="请输入邮箱">
+                </div>
+                <div class="space_pc space_phone"></div>
+
+            </div>
+            <div class="space_phone"></div>
+            <div class="col-lg-6 col-sm-12 col-xs-12">
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">性别</span>
+                    <select class="form-control" v-model="sex" id="sex" style="width: auto;display: inline">
+                        <option value="1">男</option>
+                        <option value="0">女</option>
+                    </select>
+                </div>
+                <div class="space_pc space_phone"></div>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">学号/工号</span>
+                    <input type="text" readonly v-model="SNO" class="form-control" placeholder="请输入学号">
+                </div>
+                <div class="space_pc space_phone"></div>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">电话</span>
+                    <input type="text" v-model="tel" class="form-control" placeholder="请输入电话">
+                </div>
+                <div class="space_pc space_phone"></div>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">角色</span>
+                    <input type="text" readonly v-model="actor" class="form-control" placeholder="请输入角色">
+                </div>
+                <div class="space_pc space_phone"></div>
+                <br>
+                <div class="col-lg-12 col-sm-12 col-xs-12 text-right">
+                    <button class="btn btn-info" v-on:click="submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./common/nav.js"></script>
+
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:'#info',
+        data:{
+            'name':'',
+            'major':'',
+            'SNO':'',
+            'tel':'',
+            'email':'',
+            'actor':'',
+            'sex':''
+        },
+        methods:{
+            submit(){
+                var d = 'Name='+vm.name+'&Major='+vm.major+"&Tel="+vm.tel+'&Sex='+vm.sex;
+                tools.postFetch('admin/Info/set?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        tools.warningC("提示",data.msg);
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                })
+            }
+        }
+    });
+    tools.postFetch('admin/Info/get','',function (data) {
+        vm.name = data.msg.Name;
+        vm.major = data.msg.Major;
+        vm.SNO = data.msg.SNO;
+        vm.sex = data.msg.Sex;
+        vm.email = data.msg.Email;
+        vm.actor = data.msg.Actor;
+        vm.tel = data.msg.Tel;
+    });
+</script>
+</body>

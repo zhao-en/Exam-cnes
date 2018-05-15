@@ -1,0 +1,200 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/4/26-->
+<!--Content: 考前测评试卷-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="./ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 50px;
+            }
+            .this_to_top{
+                position: fixed;
+                bottom: 50px;
+                right: 10px;
+                margin: auto;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 50px;
+            }
+            .this_to_top{
+                position: fixed;
+                bottom: 100px;
+                right: 50px;
+                margin: auto;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header" id="this_top"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考试模块</li>
+        <li class="active">在线测评</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-lg-6 text-right"><span style="font-weight: bolder">剩余时间:</span>&nbsp<span style="color: red;">10:26</span></div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-6">
+                <span>1.运输层主要使用的两种协议(多选)</span>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> 传输控制协议TCP
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox"> 用户数据包协议UDP
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox"> 文件上传协议FTP
+                    </label>
+                    <br>
+                    <label>
+                        <input type="checkbox"> 文件上传协议FTP
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="over"></div><!--背景层-->
+                <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+                    <img src="img/practice_title_img.jpg" title="点击放大图片" class="img-thumbnail" style="height: 100px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-6">
+                <span>2.计算机网络可以向用户提供哪些服务?</span><br>
+                <div class="row">
+                    <label class="col-lg-12" for="wodedaan">我的答案：</label>
+                    <textarea class="col-lg-12" name="wodedaan" id="wodedaan" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="over"></div><!--背景层-->
+                <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+                    <img src="img/practice_title_img.jpg" title="点击放大图片" class="img-thumbnail" style="height: 100px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="col-lg-6">
+            <span>3.运输层主要使用的两种协议(多选)</span>
+            <div class="checkbox">
+                <label>
+                    <input type="radio"> 对
+                </label>
+                <br>
+                <label>
+                    <input type="radio"> 错
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="over"></div><!--背景层-->
+            <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+                <img src="img/practice_title_img.jpg" title="点击放大图片" class="img-thumbnail" style="height: 100px;">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right">
+        <button class="btn btn-info">☞交卷</button>
+    </div>
+
+</div>
+<!--锚点to top-->
+<div class="row">
+    <div class="this_to_top">
+        <a class="btn btn-info" href="#this_top"><span><i class="icon iconfont icon-up" href=""></i></span></a>
+    </div>
+</div>
+<!--占位-->
+<div class="space_pc space_phone">&nbsp</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+</body>

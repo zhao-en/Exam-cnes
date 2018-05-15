@@ -1,0 +1,34 @@
+
+——————————————————————————————————————————————————————
+|  考试模块-》习题练习                                 |
+——————————————————————————————————————————————————————
+exam_practice.html
+习题练习主页面：练习范围 题型选择 考点选择
+
+exam_practice_jianda_write.html
+简答题答题页面
+
+exam_practice_panduan_write.html
+判断题答题页面
+
+exam_practice_records.html
+习题练习历史记录页面
+
+exam_practice_xuanze_write.html
+选择题答题页面
+
+index_index.html
+前台进入主页面
+
+my_info.html
+个人信息页面，支持修改
+
+my_save_password.html
+修改密码页面
+
+
+——————————————————————————————————————————————————————
+|  考试模块-》考前测评                                 |
+——————————————————————————————————————————————————————
+exam_scores.html
+考试最终得分页面

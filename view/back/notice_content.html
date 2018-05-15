@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 10px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 10px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人信息</li>
+        <li class="active">信息查看</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row" id="nc">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 this_content_background_color">
+        <div class="panel panel-primary">
+            <div class="panel-heading  text-center">
+                <h3 class="panel-title" v-html="title">
+                    {{title}}
+                </h3>
+            </div>
+            <div class="panel-body text-left" >
+                <div v-html="content">
+
+                </div>
+                <hr>
+                <div v-html="img">
+
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <a href="notice_list.html" class="btn btn-info">返回</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./common/nav.js"></script>
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+<script>
+    var vm = new Vue({
+       el:'#nc',
+       data:{
+           'title':'',
+           'content':'',
+           'img':''
+       },
+        methods:{
+           get(id){
+               var d = "W="+['NoticeID='+id];
+               tools.postFetch('notice/Notice/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                   if(data.res === true){
+                       vm.title = data.msg.L.Title;
+                       vm.content = data.msg.L.Content;
+                        if(data.msg.L.SrcUrl !== ''){
+                           imgsrc = './../img/' + data.msg.L.SrcUrl;
+                           // console.log(imgsrc);
+                           vm.img = "<img src='"+imgsrc+"'/>";
+                        }
+
+                   }else{
+                       tools.warningC("提示",data.msg);
+                   }
+               });
+           }
+        }
+    });
+    vm.get(tools.getQueryString('id'));
+</script>
+
+</body>

@@ -1,0 +1,202 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/1-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 10px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 10px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">信息修改</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div class="form-group">
+                        <label for="message-text1" class="col-form-label">账户:</label>
+                        <input class="form-control" id="message-text1">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text2" class="col-form-label">用户名:</label>
+                        <input class="form-control" id="message-text2">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">教师</label><br>
+                        <select class="form-control selectpicker"  id="recipient-name">
+                            <option>教师</option>
+                            <option>学生</option>
+                            <option>管理员</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息管理</li>
+        <li class="active">用户信息</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <table class="table table-hover ">
+            <caption class="this_ziliaoxiazai">用户信息</caption>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>账户</th>
+                <th>角色</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>赵震</td>
+                <td>5120142102</td>
+                <td>管理员</td>
+                <td><a style="cursor:pointer" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">修改</a>&nbsp<a href="">删除</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>admin</td>
+                <td>5120142102</td>
+                <td>学生</td>
+                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>CC</td>
+                <td>5120142102</td>
+                <td>教师</td>
+                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>测试</td>
+                <td>5120142102</td>
+                <td>教师</td>
+                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>测试2</td>
+                <td>5120142102</td>
+                <td>学生</td>
+                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-right">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+</body>

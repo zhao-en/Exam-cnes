@@ -1,0 +1,313 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/4-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 10px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 10px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+        /*复选框样式*/
+        .this_checkbox input[type='checkbox']{
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+        }
+        .this_checkbox {
+            position: relative;
+            height: 30px;
+            margin-top: 5px;
+        }
+        .this_checkbox label {
+            position: relative;
+            left: 30px;
+            top: 0;
+            height: 20px;
+            line-height: 20px;
+        }
+        .this_checkbox label:before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+        }
+
+        .this_checkbox label:after {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: 0;
+            border-right: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            background: #fff;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+        }
+
+        .this_checkbox input[type='checkbox']:checked + label:before {
+            background: #4cd764;
+            border-color: #4cd764;
+        }
+
+        .this_checkbox input[type='checkbox']:checked + label:after {
+            background: #4cd764;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    试卷信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="input-group">
+                        <label for="paper_name">试卷名称</label>
+                        <input class="form-control" type="text" id="paper_name" placeholder="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">创建
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人信息</li>
+        <li class="active">信息查看</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="col-lg-10 col-lg-offset-1 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+            <table class="table table-hover ">
+                <caption class="this_ziliaoxiazai">试卷预览</caption>
+                <thead>
+                <tr>
+                    <th>题目类型</th>
+                    <th>范围</th>
+                    <th>考点</th>
+                    <th>难度</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>选择</td>
+                    <td>第一章 概述</td>
+                    <td>路由</td>
+                    <td>高</td>
+                    <td>5</td>
+                    <td><a href="">删除</a>&nbsp;<a href="">修改</a></td>
+                </tr>
+                <tr>
+                    <td>选择</td>
+                    <td>第一章 概述</td>
+                    <td>路由</td>
+                    <td>高</td>
+                    <td>5</td>
+                    <td><a href="">删除</a>&nbsp;<a href="">修改</a></td>
+                </tr>
+                <tr>
+                    <td>选择</td>
+                    <td>第一章 概述</td>
+                    <td>路由</td>
+                    <td>高</td>
+                    <td>5</td>
+                    <td><a href="">删除</a>&nbsp;<a href="">修改</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-10 text-right">
+            <button class="btn btn-info"  data-toggle="modal" data-target="#myModal">创建</button>
+        </div>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12">
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">范围选择</span>
+                    <select class="form-control" name="fanwei" id="fanwei" style="width: 70%;display: inline">
+                        <option>第1章&nbsp;概述</option>
+                        <option>第2章&nbsp;物理层</option>
+                        <option>第3章&nbsp;数据链路层</option>
+                        <option>第4章&nbsp;网络层</option>
+                        <option>第5章&nbsp;运输层</option>
+                        <option>第6章&nbsp;应用层</option>
+                        <option>第7章&nbsp;网络安全</option>
+                        <option>第8章&nbsp;因特网上的音频/视频服务</option>
+                        <option>第9章&nbsp;无线网络和移动网络</option>
+                        <option>第10章&nbsp;下一代因特网</option>
+                        <option>CCNA</option>
+                        <option>CCNP</option>
+                        <option>HCNA</option>
+                        <option>HCNP</option>
+                    </select>
+                    <div class="this_checkbox" >
+                        <span><input id="checkbox1" type="checkbox" checked><label for="checkbox1" ></label></span>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">题型选择</span>
+                    <select class="form-control" name="tixing" id="tixing" style="width: 70%;display: inline">
+                        <option>选择题目</option>
+                        <option>问答题目</option>
+                        <option>判断题目</option>
+                    </select>
+                    <div class="this_checkbox" >
+                        <span><input id="checkbox2" type="checkbox" checked><label for="checkbox2" ></label></span>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">考点选择</span>
+                    <select class="form-control" name="zhishidian" id="zhishidian" style="width: 70%;display: inline">
+                        <option>路由</option>
+                        <option>交换机</option>
+                        <option>IP分配</option>
+                    </select>
+                    <div class="this_checkbox" >
+                        <span><input id="checkbox3" type="checkbox" checked><label for="checkbox3" ></label></span>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <span class="input-group-addon">难度系数</span>
+                    <select class="form-control" name="nanduxishu" id="nanduxishu" style="width: 70%;display: inline">
+                        <option>高</option>
+                        <option>中</option>
+                        <option>低</option>
+                    </select>
+                    <div class="this_checkbox" >
+                        <span><input id="checkbox4" type="checkbox" checked><label for="checkbox4" ></label></span>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-12  input-group">
+                    <div class="input-group" style="width:60%;">
+                        <span class="input-group-btn"><button class="btn btn-default" type="button">-</button></span>
+                        <input type="text" class="form-control" placeholder="此处填写题目数量，例：2">
+                        <span class="input-group-btn"><button class="btn btn-default" type="button">+</button></span>
+                    </div>
+                </div>
+                <br>
+                <div class="col-lg-12 text-right">
+                    <button class="btn btn-info">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+</body>

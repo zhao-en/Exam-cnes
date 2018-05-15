@@ -1,0 +1,157 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/7-->
+<!--Content: 404-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="./ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="./ref/iconfont/iconfont.css">
+
+    <style>
+        .row {
+            margin: 10px;
+        }
+        .head {
+            height: 90px;
+            background-color: #eee;
+        }
+        /*
+         *PC
+         */
+        @media (max-width:992px){
+
+        }
+        /*
+         * phone
+         */
+        @media (min-width:992px){
+
+        }
+        #noticeCarousel img{
+            margin:0 auto
+        }
+    </style>
+</head>
+<body>
+<!--header-->
+<div class="row">
+    <div class="col-lg-6
+                col-md-6
+                col-sm-6
+                col-xs-12 text-center head">
+        <img src="img/swust-logo.png" alt="">
+    </div>
+    <div class="col-lg-6
+                col-md-6
+                col-sm-6
+                col-xs-12 text-center head">
+        <h2>SWUSTCNES</h2>
+    </div>
+</div>
+<!--导航条-->
+<div class="row">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">CNES</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="">首页</a></li>
+                    <li class="active" ><a href="./notice.html">公告</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            友情链接 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://www.swust.edu.cn/">西南科技大学</a></li>
+                            <li><a href="http://www.cs.swust.edu.cn/">计算机科学与技术学院</a></li>
+                            <li><a href="http://acm.swust.edu.cn/">SWUST OJ</a></li>
+                        </ul>
+                    </li>
+                    <li ><a href="./login.html">后台登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<!--内容-->
+<div class="row" id = 'notice_content' style="background-color: #122b40;border-radius: 10px;height: 100%">
+    <div class="text-center" style="color: white">
+    <h1>404 not found</h1>
+    <h1>请确保你输入的url有效</h1>
+    <h1>......</h1>
+    </div>
+</div>
+<br><br>
+<!--footer-->
+<div class="row">
+    <nav class="navbar navbar-default navbar-fixed-bottom text-center" role="navigation">
+        <a class="na" href="#">版权所有&copy;2017西南科技大学计算机科学与技术学院</a><br>
+        <span class="na1">教育信息化推进办公室技术支持&nbsp;电话:0816-15280905869</span>
+    </nav>
+</div>
+
+<!--vue引入-->
+<script src="ref/vue/vue.js"></script>
+<!--js文件引入-->
+<script src="js/notice.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="csModal fade" id="CSModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    模态框（Modal）标题
+                </h4>
+            </div>
+            <div class="modal-body">
+                在这里添加一些文本
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+
+</body>
+</html>

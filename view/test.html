@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>first example</title>
+    <meta charset="UTF-8">
+    <!--引入公共文件-->
+    <script type="text/javascript" src="ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="./ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <script src="./common/head.js"></script>
+    <style>
+        /**
+         *(<768px)     (≥768px)     (≥992px)     (≥1200px)
+         *.col-xs-     .col-sm-     .col-md-     .col-lg-
+         *
+         */
+        @media (min-width:0px){
+            .self-height{
+                height: 50px;
+            }
+        }
+        @media (min-width:992px){
+            .self-height{
+                height: 100px;
+            }
+        }
+        .row {
+            margin: 10px;
+        }
+    </style>
+
+</head>
+<!--定义作用区域-->
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#example-navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">菜鸟教程</a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">iOS</a></li>
+                <li><a href="#">SVN</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Java <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">jmeter</a></li>
+                        <li><a href="#">EJB</a></li>
+                        <li><a href="#">Jasper Report</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">分离的链接</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">另一个分离的链接</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="row">
+        <div class="myleft  col-lg-6
+                            col-md-6
+                            col-sm-6
+                            col-xs-12 text-center"
+             style="background-color: palegreen;">
+            <img src="img/swust-logo.png" alt="">
+        </div>
+        <div class="myright col-lg-6
+                            col-md-6
+                            col-sm-6
+                            col-xs-12 text-center"
+            style="background-color: yellow;">
+            <h2>SWUSTCNES</h2>
+        </div>
+    </div>
+    <div class="row">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">菜鸟教程</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">iOS</a></li>
+                        <li><a href="#">SVN</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Java
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">jmeter</a></li>
+                                <li><a href="#">EJB</a></li>
+                                <li><a href="#">Jasper Report</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">分离的链接</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">另一个分离的链接</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+<script>
+    // var app = new Vue({
+    //     el: '#app',
+    //     data: {
+    //         message: '<button class="btn btn-info">点击</button>',
+    //         object : {
+    //             name: '菜鸟教程',
+    //             url: 'http://www.runoob.com',
+    //             slogan: '学的不仅是技术，更是梦想！'
+    //         },
+    //         getw:10,
+    //         imgherf:'img/silder/img-slider-01.jpg'
+    //     },
+    //     watch : {
+    //         getw:function (val) {
+    //             alert(val);
+    //         }
+    //     }
+    // })
+
+</script>
+</body>
+</html>
