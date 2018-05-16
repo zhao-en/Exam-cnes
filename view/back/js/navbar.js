@@ -30,7 +30,7 @@ var navbarHtml = "<nav class=\"navbar navbar-default\" role=\"navigation\">\n" +
     "                        <ul class=\"dropdown-menu\" style=\"border-radius: 5px\">\n" +
     "                            <li class=\"text-center\"><a href=\"./my_info.html\" style=\"border-radius: 3px\">信息查看</a></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./my_save_password.html\">修改密码</a></li>\n" +
-    "                            <li class=\"text-center\"><a href=\"./my_save_password.html\">用户列表</a></li>\n" +
+    "                            <li class=\"text-center\"><a href=\"./my_user_list.html\">用户列表</a></li>\n" +
     "                        </ul>\n" +
     "                    </li>\n" +
     "\n" +
