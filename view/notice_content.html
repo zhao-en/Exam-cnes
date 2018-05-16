@@ -96,21 +96,21 @@
     </nav>
 </div>
 <!--内容-->
-<div class="row" id="notice_content">
+<div class="row" id="nc">
     <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
         <div class="panel panel-primary">
             <div class="panel-heading  text-center">
-                <h3 class="panel-title" v-html="notice_content_title">
-                    <!--公告标题-->
+                <h3 class="panel-title" v-html="title">
+                    {{title}}
                 </h3>
             </div>
-            <div class="panel-body text-left">
-                <div v-html="notice_content_txt">
-                    <!--公告内容-->
+            <div class="panel-body text-left" >
+                <div v-html="content">
+
                 </div>
                 <hr>
-                <div v-html="notice_content_img">
-                    <!--公告图片-->
+                <div v-html="img">
+
                 </div>
             </div>
             <div class="panel-footer text-right">
@@ -131,6 +131,45 @@
 <!--vue引入-->
 <script src="./ref/vue/vue.js"></script>
 <!--index.js文件引入-->
-<script src="./js/notice_content.js"></script>
+<script src="./common/tools.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+    var vm = new Vue({
+        el:'#nc',
+        data:{
+            'title':'',
+            'content':'',
+            'img':''
+        },
+        methods:{
+            get(id){
+                var d = "W="+['NoticeID='+id];
+                tools.postFetch('notice/Notice/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        vm.title = data.msg.L.Title;
+                        vm.content = data.msg.L.Content;
+                        if(data.msg.L.SrcUrl !== ''){
+                            imgsrc = './img/' + data.msg.L.SrcUrl;
+                            // console.log(imgsrc);
+                            vm.img = "<img src='"+imgsrc+"'/>";
+                        }
+
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
+            }
+        }
+    });
+    vm.get(tools.getQueryString('id'));
+</script>
 </body>
 </html>
