@@ -12,6 +12,8 @@ namespace app\admin\controller;
 use app\common\controller\Redisc;
 use think\Controller;
 use app\admin\model\User as UserModel;
+use think\Db;
+use think\Exception;
 
 class Info extends Controller
 {
@@ -63,4 +65,42 @@ class Info extends Controller
         }
         return $this->trueMsg("更新成功");
     }
+
+    /**
+     * 获取用户信息
+     * return [姓名 专业 账户 电话 邮箱 角色
+     */
+    function getUserList($KeyWord = "", $W = '', $P = 1, $N = 10){
+
+        try{
+            //统计数目
+            $T = Db::table('cnes_user')->alias('u')
+                ->join('cnes_actor_user_link aul','u.UserID = aul.UserID')
+                ->join('cnes_actor_static a','aul.ActorID = a.ActorID')->count();
+            //数据查询
+            $L = Db::table('cnes_user')->alias('u')
+                ->join('cnes_actor_user_link aul','u.UserID = aul.UserID')
+                ->join('cnes_actor_static a','aul.ActorID = a.ActorID')->page($P,$N)
+                ->field('u.UserID,u.SNO,u.Name as Name,a.Name as Actor,u.Sex,u.Major,u.Tel,a.ActorID')->select();
+
+            return $this->trueMsg(["L"=>$L,'P'=>intval($P),'N'=>$N,'T'=>$T]);
+        }catch (Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     * 修改用户信息
+     */
+    function saveUserInfo($info = ''){
+        return $this->trueMsg("修改成功");
+    }
+
+    /**
+     * 删除用户信息
+     */
+    function delUserInfo(){
+        return $this->trueMsg("删除成功");
+    }
+
 }

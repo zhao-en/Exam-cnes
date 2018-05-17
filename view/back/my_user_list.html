@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
     <!--小图标文件引入-->
     <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+
     <style>
         /*
          *phone
@@ -54,43 +55,10 @@
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">信息修改</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
 
-                    <div class="form-group">
-                        <label for="message-text1" class="col-form-label">账户:</label>
-                        <input class="form-control" id="message-text1">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text2" class="col-form-label">用户名:</label>
-                        <input class="form-control" id="message-text2">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">教师</label><br>
-                        <select class="form-control selectpicker"  id="recipient-name">
-                            <option>教师</option>
-                            <option>学生</option>
-                            <option>管理员</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确定修改</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
 
 
 
@@ -107,7 +75,69 @@
     </ol>
 </div>
 <!--个人信息内容-->
-<div class="row">
+<div class="row" id="ul">
+
+        <!--修改模态框-->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">信息修改</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+
+                            <div class="form-group">
+                                <label for="message-text1" class="col-form-label">账户:</label>
+                                <input class="form-control" id="message-account" v-model="info.SNO">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text2" class="col-form-label">用户名:</label>
+                                <input class="form-control" id="message-name" v-model="info.Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">角色</label><br>
+                                <select class="form-control selectpicker"  id="message-actor" v-model="info.ActorID">
+                                    <option value="0">教师</option>
+                                    <option value="1">学生</option>
+                                    <option value="2">管理员</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" v-on:click="save"> 确定修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--去顶删除模态框-->
+        <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delModalLabel">{{warning.title}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{warning.txt}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" v-on:click="del">确定删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--_____________________________-->
     <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
         <table class="table table-hover ">
             <caption class="this_ziliaoxiazai">用户信息</caption>
@@ -121,52 +151,30 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>赵震</td>
-                <td>5120142102</td>
-                <td>管理员</td>
-                <td><a style="cursor:pointer" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">修改</a>&nbsp<a href="">删除</a></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>admin</td>
-                <td>5120142102</td>
-                <td>学生</td>
-                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>CC</td>
-                <td>5120142102</td>
-                <td>教师</td>
-                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>测试</td>
-                <td>5120142102</td>
-                <td>教师</td>
-                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>测试2</td>
-                <td>5120142102</td>
-                <td>学生</td>
-                <td><a href="">修改</a>&nbsp<a href="">删除</a></td>
+            <tr v-for="(item, index) in dataList" v-bind:class="'id-' + item.NoticeID">
+                <td>{{index+1}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.SNO}}</td>
+                <td>{{item.Actor}}</td>
+                <td><a style="cursor: pointer" v-on:click="delModal(index)">删除</a>&nbsp
+                    <a style="cursor: pointer" v-on:click="saveModal(index)">修改</a>
+                </td>
             </tr>
             </tbody>
         </table>
-        <div class="text-right">
-            <ul class="pagination">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&raquo;</a></li>
+
+        <div class="">
+            <ul class="pager">
+                <li v-bind:class="prePageClass"><a class="btn" v-on:click="prePage">上一页</a></li>
+                <li v-bind:class="PNO1"><a v-bind:class="'btn' + ' ' + checked1" v-on:click="btnClick(text1)">{{text1}}</a></li>
+                <li v-bind:class="PNO2"><a v-bind:class="'btn' + ' ' + checked2" v-on:click="btnClick(text2)">{{text2}}</a></li>
+                <li v-bind:class="PNO3"><a v-bind:class="'btn' + ' ' + checked3" v-on:click="btnClick(text3)">{{text3}}</a></li>
+                <li v-bind:class="PNO4"><a v-bind:class="'btn' + ' ' + checked4" v-on:click="btnClick(text4)">{{text4}}</a></li>
+                <li v-bind:class="PNO5"><a v-bind:class="'btn' + ' ' + checked5" v-on:click="btnClick(text5)">{{text5}}</a></li>
+                <li v-bind:class="nextPageClass"><a class="btn" v-on:click="nextPage">下一页</a></li>
+                <li class="">跳转</li>
+                <li class=""><input class="" style="border-radius: 5px;width: 50px" v-model="TPage" type="text">页</li>
+                <li class=""><button style="border-radius: 2px" v-on:click="tiaozhuan">确定</button></li>
             </ul>
         </div>
     </div>
@@ -189,6 +197,8 @@
 <!--引入公共css-->
 <link rel="stylesheet" href="css/common.css">
 <script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
 
 
 
@@ -199,4 +209,396 @@
 
 
 <!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:'#ul',
+        data:{
+
+            //modal
+            "info":{
+               "UserID":"",
+               "SNO":"",
+               "Name":"",
+               "Actor":"",
+               "Sex":"",
+               "Major":"",
+               "Tel":""
+            },
+
+            warning:{
+                "title":"",
+                "txt":""
+            },
+
+            //数据 需要组合
+            'dataList':{},
+
+            'Page':1, //当前页码
+            'TPage':1,//跳转页码
+            'MPage':1,//最大页数
+
+
+            //文本
+            'text1':1,
+            'text2':2,
+            'text3':3,
+            'text4':4,
+            'text5':5,
+
+            //样式 是否可选
+            'prePageClass':'', //上一页class
+            'nextPageClass':'',//下一页class
+            'PNO1':'',//下一页class
+            'PNO2':'',//下一页class
+            'PNO3':'',//下一页class
+            'PNO4':'',//下一页class
+            'PNO5':'',//下一页class
+
+            //每一页几条
+            'N':10,
+
+            //设置选中样式
+            'checked1':'',
+            'checked2':'',
+            'checked3':'',
+            'checked4':'',
+            'checked5':''
+
+
+        },
+        methods:{
+
+            /**
+             * 模态框
+             */
+            saveModal(index){
+                $("#editModal").modal('show');
+                vm.info = vm.dataList[index];
+            },
+
+            /**
+             * 确定修改
+             */
+            save(){
+                $("#editModal").modal('hide');
+                tools.postJsonPost('admin/Info/saveUserInfo?XDEBUG_SESSION_START=14658',vm.info,function (data) {
+                    if(data.res === true){
+                        tools.warningC("提示","修改成功");
+                    }else{
+                        tools.warningC("提示","修改失败");
+                    }
+                });
+            },
+
+            delModal(index){
+                vm.info = vm.dataList[index];
+                vm.warning.title = "提示";
+                vm.warning.txt = "确定删除 "+vm.info.Name+" 用户!";
+                $("#delModal").modal('show');
+            },
+
+            del(){
+                $("#delModal").modal('hide');
+                tools.postJsonPost('admin/Info/delUserInfo?XDEBUG_SESSION_START=14658',vm.info,function (data) {
+                    if(data.res === true){
+                        tools.warningC("提示",data.msg);
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
+
+            },
+            details(NoticeID){
+                window.location.href = './notice_content.html?id='+NoticeID;
+            },
+            /**
+             * 获取数据库第一页数据
+             */
+            get(KeyWord,W, P,N){
+                var d = {"KeyWord":KeyWord,"W":{"ID":1},"P":P,"N":N};
+                tools.postJsonPost('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        vm.dataList = data.msg.L;
+                        vm.Page = data.msg.P;
+                        vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                        vm.clear();
+                        vm.setPageBtn();
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
+            },
+            /**
+             * 跳转
+             */
+            tiaozhuan(){
+                if(vm.TPage > vm.MPage){
+                    tools.warningC("提示","当前公告列表最大为"+vm.MPage+"页");
+                }else{
+                    var d = "P="+vm.TPage+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = vm.TPage;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+            },
+            /**
+             *下一页
+             */
+            nextPage(){
+                if((vm.Page + 1) <= vm.MPage ){
+                    var d = "P="+(vm.Page +1)+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = vm.Page +1;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+            },
+            /**
+             * 上一页
+             */
+            prePage(){
+                if((vm.Page - 1) > 0){
+                    var d = "P="+(vm.Page - 1)+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = vm.Page - 1;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+
+            },
+            /**
+             *点击按钮
+             */
+            btnClick(page){
+                if(vm.Page !== page){
+                    var d = "P="+page+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = page;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+
+            },
+
+            /**
+             * 对分页按钮进行调整
+             */
+            setPageBtn(){
+                //Mpage 调整样式
+                if(vm.MPage <= 5){
+                    if(vm.MPage <= 4){
+                        vm.setHidden(5);
+                    }
+                    if(vm.MPage <= 3){
+                        vm.setHidden(4);
+                    }
+                    if(vm.MPage <= 2){
+                        vm.setHidden(3);
+                    }
+                    if(vm.MPage <= 1){
+                        vm.setHidden(2);
+                    }
+                    vm.text1 = 1;
+                    vm.text2 = 2;
+                    vm.text3 = 3;
+                    vm.text4 = 4;
+                    vm.text5 = 5;
+
+                    vm.setCheck(vm.Page);
+                    vm.setDisabled(vm.Page);
+                    if(vm.Page === 1){
+                        vm.setDisabled(-2);
+                        vm.setDisabled(-1);
+                    }
+                }else if(vm.MPage > 5){
+                    if(vm.Page <= 3){ //1 2 3 ... MPage
+                        vm.text1 = 1;
+                        vm.text2 = 2;
+                        vm.text3 = 3;
+                        vm.text4 = '...';
+                        vm.text5 = vm.MPage;
+
+                        vm.setDisabled(vm.Page);
+                        vm.setCheck(vm.Page);
+                        vm.setDisabled(4);
+                        if(vm.Page === 1){
+                            vm.setDisabled(-2);
+                        }
+                    }else if(vm.Page >= (vm.MPage - 2)){ // 1 ... MPage-2 MPage-1 MPage
+                        vm.text1 = 1;
+                        vm.text2 = '...';
+                        vm.text3 = vm.MPage-2;
+                        vm.text4 = vm.MPage-1;
+                        vm.text5 = vm.MPage;
+
+                        vm.setDisabled(5 - (vm.MPage - vm.Page));
+                        vm.setCheck(5 - (vm.MPage - vm.Page));
+                        vm.setDisabled(2);
+                        if(vm.Page === vm.MPage){
+                            vm.setDisabled(-1);
+                        }
+                    }else{ // 1 ... Page ... MPage
+                        vm.text1 = 1;
+                        vm.text2 = '...';
+                        vm.text3 = vm.Page;
+                        vm.text4 = '...';
+                        vm.text5 = vm.MPage;
+
+                        vm.setDisabled(2);
+                        vm.setDisabled(3);
+                        vm.setCheck(3);
+                        vm.setDisabled(4);
+                    }
+                }
+            },
+            /**
+             * hidden
+             */
+            setHidden(id){
+                switch (id){
+                    case 1:
+                        vm.PNO1 = 'hidden';
+                        break;
+                    case 2:
+                        vm.PNO2 = 'hidden';
+                        break;
+                    case 3:
+                        vm.PNO3 = 'hidden';
+                        break;
+                    case 4:
+                        vm.PNO4 = 'hidden';
+                        break;
+                    case 5:
+                        vm.PNO5 = 'hidden';
+                        break;
+                    case -1:
+                        vm.nextPageClass = 'hidden';
+                        break;
+                    case -2:
+                        vm.prePageClass = 'hidden';
+                        break;
+                }
+            },
+            /**
+             * hidden
+             */
+            setDisabled(id){
+                switch (id){
+                    case 1:
+                        vm.PNO1 = 'disabled';
+                        break;
+                    case 2:
+                        vm.PNO2 = 'disabled';
+                        break;
+                    case 3:
+                        vm.PNO3 = 'disabled';
+                        break;
+                    case 4:
+                        vm.PNO4 = 'disabled';
+                        break;
+                    case 5:
+                        vm.PNO5 = 'disabled';
+                        break;
+                    case -1:
+                        vm.nextPageClass = 'disabled';
+                        break;
+                    case -2:
+                        vm.prePageClass = 'disabled';
+                        break;
+                }
+            },
+            /**
+             *
+             */
+            setChecked(){
+                switch (id){
+                    case 1:
+                        vm.PNO1 = 'disabled';
+                        break;
+                    case 2:
+                        vm.PNO2 = 'disabled';
+                        break;
+                    case 3:
+                        vm.PNO3 = 'disabled';
+                        break;
+                    case 4:
+                        vm.PNO4 = 'disabled';
+                        break;
+                    case 5:
+                        vm.PNO5 = 'disabled';
+                        break;
+                    case -1:
+                        vm.nextPageClass = 'disabled';
+                        break;
+                    case -2:
+                        vm.prePageClass = 'disabled';
+                        break;
+                }
+            },
+            clear(){
+                vm.prePageClass = '';
+                vm.nextPageClass = '';
+                vm.PNO1 = '';
+                vm.PNO2 = '';
+                vm.PNO3 = '';
+                vm.PNO4 = '';
+                vm.PNO5= '';
+                vm.checked1 = '';
+                vm.checked2 = '';
+                vm.checked3 = '';
+                vm.checked4 = '';
+                vm.checked5 = '';
+            },
+            setCheck(id){
+                switch (id){
+                    case 1:
+                        vm.checked1 = 'active';
+                        break;
+                    case 2:
+                        vm.checked2 = 'active';
+                        break;
+                    case 3:
+                        vm.checked3 = 'active';
+                        break;
+                    case 4:
+                        vm.checked4 = 'active';
+                        break;
+                    case 5:
+                        vm.checked5 = 'active';
+                        break;
+                }
+            }
+        }
+    });
+    vm.get([],[],1,vm.N);
+</script>
 </body>
