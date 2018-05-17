@@ -299,7 +299,7 @@
 
             del(){
                 $("#delModal").modal('hide');
-                tools.postJsonPost('admin/Info/delUserInfo?XDEBUG_SESSION_START=14658',vm.info,function (data) {
+                tools.postJsonFetch('admin/Info/delUserInfo?XDEBUG_SESSION_START=14658',vm.info,function (data) {
                     if(data.res === true){
                         tools.warningC("提示",data.msg);
                     }else{
@@ -316,7 +316,7 @@
              */
             get(KeyWord,W, P,N){
                 var d = {"KeyWord":KeyWord,"W":{"ID":1},"P":P,"N":N};
-                tools.postJsonPost('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
+                tools.postJsonFetch('admin/Info/getUserList?XDEBUG_SESSION_START=14658',d,function (data) {
                     if(data.res === true){
                         vm.dataList = data.msg.L;
                         vm.Page = data.msg.P;

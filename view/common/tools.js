@@ -73,6 +73,26 @@ var tools = new Vue({
             })
         },
         /**
+         * fetch json
+         */
+        postJsonFetch(module , data , callback){
+            fetch(tools.serverUrl + module, {
+                method:"post",//or 'GET'
+                credentials: "include",//or "include","same-origin":只在请求同域中资源时成功，其他请求将被拒绝。
+                headers: {
+                    'cache-control': 'no-cache',
+                    'content-type': 'application/json'
+                },
+                body:JSON.stringify(data)
+            }).then(function (response) {
+                return response.json()
+            }).then(function (data) {
+                callback(data);
+            }).catch(function (err) {
+                tools.warningC("提示","连接失败")
+            })
+        },
+        /**
          * 上传文件
          */
         imgFetch(module , data , callback){
