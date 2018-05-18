@@ -172,14 +172,14 @@
                     $("#notice_lg_img").attr({"src":objUrl});
                 }
                 tools.getImageSize('image_upload',function (obj) {
-                    if(obj.width > 500 || obj.height > 500){
-                        tools.warningC("提示","图片上传文件比例不符合规定（height<500且weight<500）");
-                    }else if(obj.size > 2048){
-                        tools.warningC("提示","图片上传文件大于2M");
-                    }else if(obj.type !== 'jpg' || obj.type !== 'jpeg' || obj.type !== 'JPG' || obj.type !== 'JPEG' ||
-                        obj.type !== 'png' || obj.type !== 'PNG'){
-                        tools.warningC("提示","图片上传类型错误");
-                    }
+                    // if(obj.width > 500 || obj.height > 500){
+                    //     tools.warningC("提示","图片上传文件比例不符合规定（height<500且weight<500）");
+                    // }else if(obj.size > 2048){
+                    //     tools.warningC("提示","图片上传文件大于2M");
+                    // }else if(obj.type !== 'jpg' || obj.type !== 'jpeg' || obj.type !== 'JPG' || obj.type !== 'JPEG' ||
+                    //     obj.type !== 'png' || obj.type !== 'PNG'){
+                    //     tools.warningC("提示","图片上传类型错误");
+                    // }
                 });
             },
             submit(){

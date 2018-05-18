@@ -67,26 +67,26 @@
     </ol>
 </div>
 <!--个人信息内容-->
-<div class="row">
+<div class="row" id="fu">
     <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
                 <span class="input-group-btn"><button class="btn btn-default">资料名称</button></span>
-                <input class="form-control" type="text" name="file_name">
+                <input class="form-control" v-model="title" type="text" name="file_name">
             </div>
             <br>
             <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
-                <label for="file_note">资料备注</label>
-                <textarea class="form-control" id="file_note" name="file_name" rows="5"></textarea>
+                <span>资料备注</span>
+                <textarea class="form-control" v-model="content" rows="5" name="file_name"></textarea>
             </div>
             <br>
             <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group">
-                <button class="btn btn-info btn-xs" onclick="javascript:$('#file_upload').click()">上传文件</button><span>期末复习资料.txt</span>
-                <input style="display: none" id="file_upload" type="file" class="form-control">
+                <span class="btn btn-info btn-xs" onclick="javascript:$('#file_upload').click()">上传资料</span>
+                <input style="display: none" id="file_upload" type="file" v-on:change="upload_file" class="form-control"><span>{{fileName}}</span>
             </div>
             <br>
             <div class="col-lg-6 col-lg-offset-3 col-xs-12 col-sm-12 input-group text-right">
-                <button class="btn btn-info">上传</button>
+                <button class="btn btn-info" v-on:click="submit">发布</button>
             </div>
         </div>
     </div>
@@ -109,6 +109,8 @@
 <!--引入公共css-->
 <link rel="stylesheet" href="css/common.css">
 <script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
 
 
 
@@ -119,4 +121,57 @@
 
 
 <!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:"#fu",
+        data:{
+            'title':'',
+            'content':'',
+            'src':'',
+            'fileName':""
+        },
+        methods:{
+            //图片预览
+            upload_file(){
+                //获取图片的路径，该路径不是图片在本地的路径
+                var obj_doc = $('#file_upload');
+                vm.src = obj_doc[0].files[0];
+                var objUrl = tools.getObjectURL(obj_doc[0].files[0]) ;
+                //文件名称显示
+                if (objUrl) {
+                    vm.fileName = vm.src.name;
+                }
+                tools.getImageSize('file_upload',function (obj) {
+                    //大小限制
+                    // if(obj.width > 500 || obj.height > 500){
+                    //     tools.warningC("提示","图片上传文件比例不符合规定（height<500且weight<500）");
+                    // }else if(obj.size > 2048){
+                    //     tools.warningC("提示","图片上传文件大于2M");
+                    // }else if(obj.type !== 'jpg' || obj.type !== 'jpeg' || obj.type !== 'JPG' || obj.type !== 'JPEG' ||
+                    //     obj.type !== 'png' || obj.type !== 'PNG'){
+                    //     tools.warningC("提示","图片上传类型错误");
+                    // }
+                });
+            },
+            submit(){
+                if(tools.isNull(vm.title) || tools.isNull(vm.content) || tools.isNull(vm.src)){
+                    tools.warningC("提示","标题和内容不能为空")
+                }else{
+                    var formData = new FormData();
+                    formData.append('Title', vm.title);
+                    formData.append('Content', vm.content);
+                    formData.append('File', vm.src);
+
+                    tools.imgFetch('file/File/add?XDEBUG_SESSION_START=14658',formData,function (data) {
+                        if(data.res === true){
+                            tools.warningC("提示",data.msg);
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+            }
+        }
+    });
+</script>
 </body>
