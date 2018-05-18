@@ -156,7 +156,7 @@
                 <td>{{item.Name}}</td>
                 <td>{{item.Time|dateFormat}}</td>
                 <td><a style="cursor: pointer" v-on:click="delModal(index)">删除</a>&nbsp
-                    <a style="cursor: pointer" v-on:click="saveModal(index)">修改</a>
+                    <a style="cursor: pointer" v-bind:download="item.Title" v-bind:href="'./../file/'+item.FileUrl">下载</a>
                     <a style="cursor: pointer" v-on:click="saveModal(index)">详情</a>
                 </td>
             </tr>
