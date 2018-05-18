@@ -23,6 +23,8 @@ require './permission.php';
 define('__ROOT__',dirname(__DIR__));
 //照片目录
 define('__IMG__',__DIR__.'/../view/img/');
+//文件目录
+define('__FILES__',__DIR__.'/../view/file/');
 //配置文件目录
 define('CONF_PATH', __DIR__ . '/../conf/');
 // 定义应用目录

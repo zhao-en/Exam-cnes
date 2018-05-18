@@ -159,7 +159,7 @@
                 }else{
                     var formData = new FormData();
                     formData.append('Title', vm.title);
-                    formData.append('Content', vm.content);
+                    formData.append('Note', vm.content);
                     formData.append('File', vm.src);
 
                     tools.imgFetch('file/File/add?XDEBUG_SESSION_START=14658',formData,function (data) {
