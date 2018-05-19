@@ -171,21 +171,21 @@
             <div class="col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12">
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">范围选择</span>
-                    <select class="form-control" name="fanwei" id="fanwei" style="width: 70%;display: inline">
-                        <option>第1章&nbsp;概述</option>
-                        <option>第2章&nbsp;物理层</option>
-                        <option>第3章&nbsp;数据链路层</option>
-                        <option>第4章&nbsp;网络层</option>
-                        <option>第5章&nbsp;运输层</option>
-                        <option>第6章&nbsp;应用层</option>
-                        <option>第7章&nbsp;网络安全</option>
-                        <option>第8章&nbsp;因特网上的音频/视频服务</option>
-                        <option>第9章&nbsp;无线网络和移动网络</option>
-                        <option>第10章&nbsp;下一代因特网</option>
-                        <option>CCNA</option>
-                        <option>CCNP</option>
-                        <option>HCNA</option>
-                        <option>HCNP</option>
+                    <select class="form-control" name="fanwei" id="fanwei" style="width: 70%;display: inline" v-model="fanweiID">
+                        <option value="1">第1章-概述</option>
+                        <option value="2">第2章-物理层</option>
+                        <option value="3">第3章-数据链路层</option>
+                        <option value="4">第4章-网络层</option>
+                        <option value="5">第5章-运输层</option>
+                        <option value="6">第6章-应用层</option>
+                        <option value="7">第7章-网络安全</option>
+                        <option value="8">第8章-因特网上的音频/视频服务</option>
+                        <option value="9">第9章-无线网络和移动网络</option>
+                        <option value="10">第10章-下一代因特网</option>
+                        <option value="11">CCNA</option>
+                        <option value="12">CCNP</option>
+                        <option value="13">HCNA</option>
+                        <option value="14">HCNP</option>
                     </select>
                     <!--<div class="this_checkbox" >-->
                         <!--<span><input id="checkbox1" type="checkbox" checked><label for="checkbox1" ></label></span>-->
@@ -194,7 +194,7 @@
                 <br>
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">题型选择</span>
-                    <select class="form-control" v-on:change="be_tixing" v-model="tixingID" name="tixing" id="tixing" style="width: 70%;display: inline">
+                    <select class="form-control" v-on:change="be_tixing" v-model="tixingID" name="tixing" id="tixing" style="width: 70%;display: inline" >
                         <option value="1">选择题目</option>
                         <option value="2">判断题目</option>
                         <option value="3">问答题目</option>
@@ -206,10 +206,10 @@
                 <br>
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">考点选择</span>
-                    <select class="form-control" name="zhishidian" id="zhishidian" style="width: 70%;display: inline">
-                        <option>路由</option>
-                        <option>交换机</option>
-                        <option>IP分配</option>
+                    <select class="form-control" name="zhishidian" id="zhishidian" style="width: 70%;display: inline" v-model="kaodianID">
+                        <option value="1">路由</option>
+                        <option value="2">交换机</option>
+                        <option value="3">IP分配</option>
                     </select>
                     <!--<div class="this_checkbox" >-->
                         <!--<span><input id="checkbox3" type="checkbox" checked><label for="checkbox3" ></label></span>-->
@@ -218,10 +218,10 @@
                 <br>
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">难度系数</span>
-                    <select class="form-control" name="nanduxishu" id="nanduxishu" style="width: 70%;display: inline">
-                        <option>高</option>
-                        <option>中</option>
-                        <option>低</option>
+                    <select class="form-control" name="nanduxishu" id="nanduxishu" style="width: 70%;display: inline" v-model="nanduID">
+                        <option value="1">高</option>
+                        <option value="2">中</option>
+                        <option value="3">低</option>
                     </select>
                     <!--<div class="this_checkbox" >-->
                         <!--<span><input id="checkbox4" type="checkbox" checked><label for="checkbox4" ></label></span>-->
@@ -245,12 +245,12 @@
                     <span style="color: red">答案解析</span><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_daanjiexi}}<br>
                     <span style="color: red">是否多选</span><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_shifouduoxuan}}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{xuanze_shifouduoxuan|IsMultiSelect}}<br>
                     <span style="color: red">题目图片</span><br>
                     &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" class="title_image" id="xuanze_img" onclick="javascript:$('#xuanze_lg_img').click();"><br>
                 </div>
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-info" onclick="add()">添加</button>
+                    <button class="btn btn-info" v-on:click="add">添加</button>
                 </div>
             </div>
         </div>
@@ -434,7 +434,7 @@
 <!--放大缩小js-->
 <script src="./js/enPictures.js"></script>
 <script src="./../ref/vue/vue.js"></script>
-<script src="./js/tools.js"></script>
+<script src="./../common/tools.js"></script>
 
 
 
@@ -452,12 +452,16 @@
         data:{
             //题型ID
             tixingID:"1",
+            fanweiID:"1",
+            kaodianID:"1",
+            nanduID:"1",
+
             //选择
             xuanze_timutigan:'',
             xuanze_timuxuanxiang:'',
             xuanze_cankaodaan:'',
             xuanze_daanjiexi:'',
-            xuanze_shifouduoxuan:'否',
+            xuanze_shifouduoxuan:0,
             //判断
             panduan_timutigan:'',
             panduan_cankaodaan:'',
@@ -465,11 +469,65 @@
             //问答
             wenda_timutigan:'',
             wenda_cankaodaan:'',
-            wenda_daanjiexi:''
+            wenda_daanjiexi:'',
+
+
+            src:""
 
         },
+        filters:{
+            IsMultiSelect(option){
+                var str = "否";
+                if(option === 0){
+                    return "否";
+                }
+                return "是";
+            }
+        },
         methods:{
-            //
+            /**
+             *试题添加
+             */
+            add(){
+                    if(tools.isNull(this.xuanze_timutigan) || tools.isNull(this.xuanze_timuxuanxiang) || tools.isNull(this.xuanze_cankaodaan) ||
+                        tools.isNull(this.xuanze_daanjiexi) || tools.isNull(this.xuanze_shifouduoxuan)){
+                        tools.warningC("请填写完整信息");
+                    }
+                    //进行远程添加请求
+                    var formData = new FormData();
+                    formData.append('TypeID', this.tixingID);
+                    formData.append('ScopeID', this.fanweiID);
+                    formData.append('LevelID', this.nanduID);
+                    formData.append('PointID', this.kaodianID);
+                    formData.append('Content', this.xuanze_timutigan);
+                    formData.append('Options', this.xuanze_timuxuanxiang);
+                    formData.append('CKAnswer', this.xuanze_cankaodaan);
+                    formData.append('JXAnswer', this.xuanze_daanjiexi);
+                    formData.append('IsMultiSelect', this.xuanze_shifouduoxuan);
+                    formData.append('SrcUrl', vm.src);
+                    tools.imgFetch('exam/practice/add?XDEBUG_SESSION_START=14658',formData,function (data) {
+                        if(data.res === true){
+                            tools.warningC("提示",data.msg);
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+
+                // }else if(this.tixingID === "2"){
+                //     if(tools.isNull(this.panduan_timutigan) || tools.isNull(this.panduan_cankaodaan) || tools.isNull(this.panduan_daanjiexi)){
+                //         tools.warningC("请填写完整信息");
+                //     }
+                //
+                // }else if(this.tixingID === "3"){
+                //     if(tools.isNull(this.wenda_timutigan) || tools.isNull(this.wenda_cankaodaan) || tools.isNull(this.wenda_daanjiexi)){
+                //         tools.warningC("请填写完整信息");
+                //     }
+                //
+                // }else{
+                //     tools.warningC("提示","error");
+                // }
+            },
+            //题型设置
             be_tixing(){
                 var xuanze_doc = $("#xuanze");
                 var panduan_doc = $("#panduan");
@@ -492,9 +550,9 @@
             //选择题目是否多选
             judge_xuanze_shifouduoxuan(){
                 if($('#xuanze_shifouduoxuan').is(':checked')){
-                    vm.xuanze_shifouduoxuan = "是";
+                    vm.xuanze_shifouduoxuan = 1;
                 }else{
-                    vm.xuanze_shifouduoxuan = "否";
+                    vm.xuanze_shifouduoxuan = 0;
                 }
             },
             //图片预览
@@ -502,8 +560,9 @@
                 //静态字典
                 var temp = {"1":'xuanze',"2":"panduan","3":"wenda"};
                 //获取图片的路径，该路径不是图片在本地的路径
-                var obj_doc = $('#' + temp[this.tixingID] + "_shangchuantupian");
+                var obj_doc = $('#' + temp[vm.tixingID] + "_shangchuantupian");
                 var objUrl = tools.getObjectURL(obj_doc[0].files[0]) ;
+                vm.src = obj_doc[0].files[0];
                 //图片预览
                 if (objUrl) {
                     $("#"+temp[this.tixingID]+"_img").attr({"src":objUrl,"width":"100px","height":"100px"});
