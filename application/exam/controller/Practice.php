@@ -12,6 +12,8 @@ namespace app\exam\controller;
 use app\common\controller\Redisc;
 use think\Controller;
 use app\exam\model\TitleBank as TitleBankModel;
+use think\Db;
+use think\Exception;
 
 class Practice extends Controller
 {
@@ -76,4 +78,90 @@ class Practice extends Controller
         }
         return $this->falseMsg("上传失败");
     }
+
+    /**
+     * 获取数据
+     * @param string $KeyWord
+     * @param string $W
+     * @param int $P
+     * @param int $N
+     * @return array|string
+     */
+    function get($KeyWord = "" , $W = "" , $P = 1 , $N = 10){
+        try{
+            //统计数目
+            $T = Db::table('cnes_title_bank')->alias('t')
+                ->where(['t.IsDel'=>0])->count();
+            //数据查询
+            $L = Db::table('cnes_title_bank')->alias('t')
+                ->join('cnes_user u','u.UserID = t.UserID')
+                ->join('cnes_title_scope_static tss','tss.ScopeID = t.ScopeID')
+                ->join('cnes_title_level_static tls','tls.LevelID = t.LevelID')
+                ->join('cnes_title_point_static tps','tps.PointID = t.PointID')
+                ->join('cnes_title_type_static tys','tys.TypeID = t.TypeID')
+                ->page($P,$N)
+                ->field(
+                    't.TitleID,t.UserID,t.ScopeID,tss.Name as ScopeName,
+                    t.LevelID,tls.Name as LevelName,t.PointID,tps.Name as PointName,
+                    t.TypeID,tys.Name as TypeName,u.Name as UserName,t.Content,
+                    t.Options,t.CKAnswer,JXAnswer,t.IsMultiSelect')->where(['t.IsDel'=>0])->select();
+            return $this->trueMsg(["L"=>$L,'P'=>intval($P),'N'=>$N,'T'=>$T]);
+        }catch (Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+    /*
+     * 删除数据
+     */
+    function del($TitleID=null){
+        if(!$this->testParams([$TitleID])){
+            return $this->falseMsg("参数不能为空");
+        }
+
+        $titleBankModel = new TitleBankModel();
+        if($titleBankModel->save(['IsDel'=>1],['TitleID'=>$TitleID]) == 1){
+            return $this->trueMsg("删除成功");
+        }
+
+        return $this->falseMsg("删除失败");
+    }
+
+    /**
+     * 修改数据
+     * @param null $Content
+     * @param null $Options
+     * @param null $CKAnswer
+     * @param null $JXAnswer
+     * @param null $TitleID
+     * @param null $TypeID
+     * @return array
+     */
+    function save($Content=null , $Options=null , $CKAnswer=null , $JXAnswer=null , $TitleID=null , $TypeID=null){
+        if(!$this->testParams([$Content , $CKAnswer ,$JXAnswer ,$TitleID , $TypeID])){
+            return $this->falseMsg("信息不能为空");
+        }
+
+        $d = [
+            "Content"=>$Content,
+            "CKAnswer"=>$CKAnswer,
+            "JXAnswer"=>$JXAnswer
+        ];
+
+        if($TypeID == 1){
+            $d['Options'] = $Options;
+        }
+
+        $titleBankModel = new TitleBankModel();
+        $res = $titleBankModel->save($d,["TitleID"=>$TitleID]);
+
+        if($res == 1){
+            return $this->trueMsg("修改成功");
+        }else if($res == 0){
+            return $this->trueMsg("信息未发生变化");
+        }
+        return $this->falseMsg("修改失败");
+    }
+
+
 }
