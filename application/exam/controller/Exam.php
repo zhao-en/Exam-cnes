@@ -11,7 +11,7 @@ namespace app\exam\controller;
 
 use think\Controller;
 
-class xam extends Controller
+class Exam extends Controller
 {
 
 }

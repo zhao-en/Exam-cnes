@@ -250,6 +250,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" class="title_image" id="xuanze_img" onclick="javascript:$('#xuanze_lg_img').click();"><br>
                 </div>
                 <div class="col-lg-12 text-right">
+                    <button class="btn btn-info" v-on:click="clear">清除</button>
                     <button class="btn btn-info" v-on:click="add">添加</button>
                 </div>
             </div>
@@ -319,7 +320,8 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" class="title_image" id="panduan_img" onclick="javascript:$('#panduan_lg_img').click();"><br>
                 </div>
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-info" onclick="add()">添加</button>
+                    <button class="btn btn-info" v-on:click="clear">清除</button>
+                    <button class="btn btn-info" v-on:click="add">添加</button>
                 </div>
             </div>
         </div>
@@ -374,7 +376,8 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;<img class="img-thumbnail" style="padding: 5px" id="wenda_img" onclick="javascript:$('#wenda_lg_img').click();"><br>
                 </div>
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-info" onclick="add()">添加</button>
+                    <button class="btn btn-info" v-on:click="add">清除</button>
+                    <button class="btn btn-info" v-on:click="add">添加</button>
                 </div>
             </div>
         </div>
@@ -434,7 +437,9 @@
 <!--放大缩小js-->
 <script src="./js/enPictures.js"></script>
 <script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
 <script src="./../common/tools.js"></script>
+<script src="./common/nav.js"></script>
 
 
 
@@ -489,22 +494,50 @@
              *试题添加
              */
             add(){
-                    if(tools.isNull(this.xuanze_timutigan) || tools.isNull(this.xuanze_timuxuanxiang) || tools.isNull(this.xuanze_cankaodaan) ||
-                        tools.isNull(this.xuanze_daanjiexi) || tools.isNull(this.xuanze_shifouduoxuan)){
-                        tools.warningC("请填写完整信息");
-                    }
+                if(tools.isNull(this.tixingID) || tools.isNull(this.fanweiID) || tools.isNull(this.kaodianID) || tools.isNull(this.nanduID)){
+                    tools.warningC("请填写完整信息");
+                }else{
                     //进行远程添加请求
                     var formData = new FormData();
                     formData.append('TypeID', this.tixingID);
                     formData.append('ScopeID', this.fanweiID);
                     formData.append('LevelID', this.nanduID);
                     formData.append('PointID', this.kaodianID);
-                    formData.append('Content', this.xuanze_timutigan);
-                    formData.append('Options', this.xuanze_timuxuanxiang);
-                    formData.append('CKAnswer', this.xuanze_cankaodaan);
-                    formData.append('JXAnswer', this.xuanze_daanjiexi);
-                    formData.append('IsMultiSelect', this.xuanze_shifouduoxuan);
-                    formData.append('SrcUrl', vm.src);
+                    if(vm.src !== ""){
+                        formData.append('SrcUrl', vm.src);
+                    }
+                    switch (this.tixingID){
+                        case "1":
+                            if(tools.isNull(this.xuanze_timutigan) || tools.isNull(this.xuanze_timuxuanxiang) || tools.isNull(this.xuanze_cankaodaan) ||
+                                tools.isNull(this.xuanze_daanjiexi) || tools.isNull(this.xuanze_shifouduoxuan)){
+                                tools.warningC("请填写完整信息");
+                            }else{
+                                formData.append('Content', this.xuanze_timutigan);
+                                formData.append('Options', this.xuanze_timuxuanxiang);
+                                formData.append('CKAnswer', this.xuanze_cankaodaan);
+                                formData.append('JXAnswer', this.xuanze_daanjiexi);
+                                formData.append('IsMultiSelect', this.xuanze_shifouduoxuan);
+                            }
+                            break;
+                        case "2":
+                            if(tools.isNull(this.panduan_timutigan) || tools.isNull(this.panduan_cankaodaan) || tools.isNull(this.panduan_daanjiexi)){
+                                tools.warningC("请填写完整信息");
+                            }else{
+                                formData.append('Content', this.panduan_timutigan);
+                                formData.append('CKAnswer', this.panduan_cankaodaan);
+                                formData.append('JXAnswer', this.panduan_daanjiexi);
+                            }
+                            break;
+                        case "3":
+                            if(tools.isNull(this.wenda_timutigan) || tools.isNull(this.wenda_cankaodaan) || tools.isNull(this.wenda_daanjiexi) ){
+                                tools.warningC("请填写完整信息");
+                            }else{
+                                formData.append('Content', this.wenda_timutigan);
+                                formData.append('CKAnswer', this.wenda_cankaodaan);
+                                formData.append('JXAnswer', this.wenda_daanjiexi);
+                            }
+                            break;
+                    }
                     tools.imgFetch('exam/practice/add?XDEBUG_SESSION_START=14658',formData,function (data) {
                         if(data.res === true){
                             tools.warningC("提示",data.msg);
@@ -512,20 +545,31 @@
                             tools.warningC("提示",data.msg);
                         }
                     });
-
-                // }else if(this.tixingID === "2"){
-                //     if(tools.isNull(this.panduan_timutigan) || tools.isNull(this.panduan_cankaodaan) || tools.isNull(this.panduan_daanjiexi)){
-                //         tools.warningC("请填写完整信息");
-                //     }
-                //
-                // }else if(this.tixingID === "3"){
-                //     if(tools.isNull(this.wenda_timutigan) || tools.isNull(this.wenda_cankaodaan) || tools.isNull(this.wenda_daanjiexi)){
-                //         tools.warningC("请填写完整信息");
-                //     }
-                //
-                // }else{
-                //     tools.warningC("提示","error");
-                // }
+                }
+            },
+            /**
+             *初始化数据
+             */
+            clear(){
+                switch (vm.tixingID){
+                    case "1":
+                            this.xuanze_timutigan = "";
+                            this.xuanze_timuxuanxiang = "";
+                            this.xuanze_cankaodaan = "";
+                            this.xuanze_daanjiexi = "";
+                            this.xuanze_shifouduoxuan = 0;
+                        break;
+                    case "2":
+                            this.panduan_timutigan="";
+                            this.panduan_cankaodaan="";
+                            this.panduan_daanjiexi="";
+                        break;
+                    case "3":
+                            this.wenda_timutigan="";
+                            this.wenda_cankaodaan="";
+                            this.wenda_daanjiexi="";
+                        break;
+                }
             },
             //题型设置
             be_tixing(){
