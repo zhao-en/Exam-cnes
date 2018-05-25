@@ -12,6 +12,8 @@ namespace app\exam\controller;
 use app\common\controller\Redisc;
 use app\exam\model\PaperBank;
 use think\Controller;
+use think\Db;
+use think\Exception;
 
 class Exam extends Controller
 {
@@ -103,6 +105,105 @@ class Exam extends Controller
 
         return $this->falseMsg("删除失败");
     }
+
+    /**
+     * get
+     */
+    function get($KeyWord = "" , $W = "" , $P = 1 , $N = 10){
+        try{
+
+            //统计数目
+            $T = Db::table('cnes_paper_bank')->alias('pb')
+                ->where(['pb.IsDel'=>0])->count();
+            //数据查询
+            $L = Db::table('cnes_paper_bank')->alias('pb')
+                ->join('cnes_user u','u.UserID = pb.CUID')->page($P,$N)
+                ->field(
+                    'pb.PIID , pb.TypeID , pb.CTInfo , pb.JTInfo , pb.QTInfo , pb.PName , pb.CTime , pb.STime , pb.ETime , LTime , u.Name as UserName , u.UserID'
+                )->where(['pb.IsDel'=>0,'pb.TypeID'=>2])->select();
+            //组装字典
+            $PointList = Redisc::hGetAll('cnes_point_list');
+            $LevelList = Redisc::hGetAll('cnes_level_list');
+            $ScopeList = Redisc::hGetAll('cnes_scope_list');
+            $TypeList = Redisc::hGetAll('cnes_type_list');
+
+            foreach ($L as $Key =>  $Value){
+                if($Value['CTInfo'] != null){
+                    $L[$Key]['CTInfo'] = json_decode($Value['CTInfo'],true);
+                    foreach ($L[$Key]['CTInfo'] as $key => $value){
+                        foreach ($value as $K => $V ){
+                            switch ($K){
+                                case "TypeID":
+                                    $L[$Key]['CTInfo'][$key]['TypeName'] = $TypeList[$V - 1];
+                                    break;
+                                case "PointID":
+                                    $L[$Key]['CTInfo'][$key]['PointName'] = $PointList[$V - 1];
+                                    break;
+                                case "LevelID":
+                                    $L[$Key]['CTInfo'][$key]['LevelName'] = $LevelList[$V - 1];
+                                    break;
+                                case "ScopeID":
+                                    $L[$Key]['CTInfo'][$key]['ScopeName'] = $ScopeList[$V - 1];
+                                    break;
+                            }
+                        }
+
+                    }
+                }
+
+                if($Value['JTInfo'] != null){
+                    $L[$Key]['JTInfo'] = json_decode($Value['JTInfo'],true);
+                    foreach ($L[$Key]['JTInfo'] as $key => $value){
+                        foreach ($value as $K => $V ){
+                            switch ($K){
+                                case "TypeID":
+                                    $L[$Key]['JTInfo'][$key]['TypeName'] = $TypeList[$V - 1];
+                                    break;
+                                case "PointID":
+                                    $L[$Key]['JTInfo'][$key]['PointName'] = $PointList[$V - 1];
+                                    break;
+                                case "LevelID":
+                                    $L[$Key]['JTInfo'][$key]['LevelName'] = $LevelList[$V - 1];
+                                    break;
+                                case "ScopeID":
+                                    $L[$Key]['JTInfo'][$key]['ScopeName'] = $ScopeList[$V - 1];
+                                    break;
+                            }
+                        }
+
+                    }
+                }
+
+                if($Value['QTInfo'] != null){
+                    $L[$Key]['QTInfo'] = json_decode($Value['QTInfo'],true);
+                    foreach ($L[$Key]['QTInfo'] as $key => $value){
+                        foreach ($value as $K => $V ){
+                            switch ($K){
+                                case "TypeID":
+                                    $L[$Key]['QTInfo'][$key]['TypeName'] = $TypeList[$V - 1];
+                                    break;
+                                case "PointID":
+                                    $L[$Key]['QTInfo'][$key]['PointName'] = $PointList[$V - 1];
+                                    break;
+                                case "LevelID":
+                                    $L[$Key]['QTInfo'][$key]['LevelName'] = $LevelList[$V - 1];
+                                    break;
+                                case "ScopeID":
+                                    $L[$Key]['QTInfo'][$key]['ScopeName'] = $ScopeList[$V - 1];
+                                    break;
+                            }
+                        }
+
+                    }
+                }
+            }
+            return $this->trueMsg(["L"=>$L,'P'=>intval($P),'N'=>$N,'T'=>$T]);
+        }catch (Exception $e){
+            return $e->getMessage();
+        }
+    }
+
+
 
 
 }
