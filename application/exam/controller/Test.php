@@ -17,9 +17,9 @@ use think\Exception;
 
 class Test extends Controller
 {
-    function add($PaperInfo=null , $PaperName=null){
+    function add($PaperInfo=null , $PaperName=null , $TotalScore=null){
 
-        if(!$this->testParams([$PaperName , $PaperInfo])){
+        if(!$this->testParams([$PaperName , $PaperInfo , $TotalScore])){
             return $this->falseMsg("请填入完整数据");
         }
 
@@ -57,7 +57,8 @@ class Test extends Controller
             "JTInfo"=>$JTInfo,
             "QTInfo"=>$QTInfo,
             "PName"=>$PaperName,
-            "CTime"=>$NTime
+            "CTime"=>$NTime,
+            "TotalScore"=>$TotalScore
         ]);
 
         if($res == 1){
@@ -73,6 +74,8 @@ class Test extends Controller
         $res["PointID"] = $data["PointID"];
         $res["LevelID"] = $data["LevelID"];
         $res["Num"] = $data["Num"];
+        $res["ScorePer"] = $data["ScorePer"];
+
 
         return $res;
     }
@@ -90,8 +93,8 @@ class Test extends Controller
             $L = Db::table('cnes_paper_bank')->alias('pb')
                 ->join('cnes_user u','u.UserID = pb.CUID')->page($P,$N)
                 ->field(
-                    'pb.PIID , pb.TypeID , pb.CTInfo , pb.JTInfo , pb.QTInfo , pb.PName , pb.CTime , u.Name as UserName , u.UserID'
-                )->where(['pb.IsDel'=>0])->select();
+                    'pb.PIID , pb.TypeID , pb.CTInfo , pb.JTInfo , pb.QTInfo , pb.PName , pb.CTime , cnes_paper_bank.TotalScore , u.Name as UserName , u.UserID'
+                )->where(['pb.IsDel'=>0,'cnes_paper_bank.TypeID'=>1])->select();
             //组装字典
             $PointList = Redisc::hGetAll('cnes_point_list');
             $LevelList = Redisc::hGetAll('cnes_level_list');

@@ -217,19 +217,23 @@
                         </div>
                         <div class="form-group" v-if="info.TypeID==1">
                             <label for="message-scope" class="col-form-label">题目范围:</label>
-                            <textarea style="height: 90px" class="form-control" id="message-scope" v-model="info.ScopeName"></textarea>
+                            <input style="height: 90px" class="form-control" id="message-scope" v-model="info.ScopeName">
                         </div>
                         <div class="form-group">
                             <label for="message-point" class="col-form-label">考点:</label>
-                            <textarea class="form-control" id="message-point" v-model="info.PointName"></textarea>
+                            <input class="form-control" id="message-point" v-model="info.PointName">
                         </div>
                         <div class="form-group">
                             <label for="message-level" class="col-form-label">难度:</label>
-                            <textarea class="form-control" id="message-level" v-model="info.LevelName"></textarea>
+                            <input class="form-control" id="message-level" v-model="info.LevelName">
                         </div>
                         <div class="form-group">
                             <label for="message-num" class="col-form-label">数量:</label>
-                            <textarea class="form-control" id="message-num" v-model="info.Num"></textarea>
+                            <input class="form-control" type="number" id="message-num" v-model="info.Num">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-score" class="col-form-label">分值/题:</label>
+                            <input class="form-control" type="number" id="message-score" v-model="info.ScorePer">
                         </div>
                     </form>
                 </div>
@@ -265,6 +269,7 @@
                     <th>考点</th>
                     <th>难度</th>
                     <th>数量</th>
+                    <th>分值/题</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -275,12 +280,14 @@
                     <td>{{item.PointName}}</td>
                     <td>{{item.LevelName}}</td>
                     <td>{{item.Num}}</td>
+                    <td>{{item.ScorePer}}</td>
                     <td><a style="cursor: pointer" v-on:click="delModal(index)">删除</a>&nbsp
                         <a style="cursor: pointer" v-on:click="saveModal(index)">修改</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <strong>试卷总分</strong>：{{TotalScore}}
         </div>
         <div class="col-lg-10 text-right">
             <button class="btn btn-info"  v-on:click="createModal">创建</button>
@@ -350,8 +357,9 @@
                 </div>
                 <br>
                 <div class="col-lg-12  input-group">
-                    <div class="input-group">
-                        题目数量：<input id="Num" data_step="1" data_min="1" data_max="10" data_digit="0" value="1"/><br><br>
+                    <div class="row">
+                        <div class="col-lg-5">题目数量：<input id="Num" data_step="1" data_min="1" data_max="10" data_digit="0" value="1"/></div>
+                        <div class="col-lg-7">单题分值：<input id="ScorePer" data_step="1" data_min="1" data_max="20" data_digit="0" value="1"/></div>
                     </div>
                 </div>
                 <br>
@@ -401,6 +409,7 @@
     var vm = new Vue({
         el:"#bdap",
         data:{
+            TotalScore:0,
             paperDataList:[
 
             ],
@@ -413,7 +422,8 @@
                 "ScopeName":"tets",
                 "PointName":"tets",
                 "LevelName":"test",
-                "Num":"test"
+                "Num":"test",
+                "ScorePer":""
             },
             saveIndex:"",
 
@@ -449,11 +459,14 @@
              */
             addOne(){
 
+                var Num = $("#Num").val();
+                var PaperScore = $("#ScorePer").val();
                 this.paperDataList.push({"TypeName":vm.st.TypeList[vm.tixingID - 1],"TypeID":vm.tixingID,
                     "ScopeName":vm.st.ScopeList[vm.fanweiID - 1],"ScopeID":vm.fanweiID,
                     "PointName":vm.st.PointList[vm.kaodianID - 1],"PointID":vm.kaodianID,
                     "LevelName":vm.st.LevelList[vm.nanduID - 1],"LevelID":vm.nanduID,
-                    "Num":$("#Num").val()});
+                    "Num":Num,"ScorePer":PaperScore});
+                vm.TotalScore += Num * PaperScore;
             },
             /**
              * 创建试卷
@@ -466,7 +479,7 @@
                 }
             },
             create(){
-                var d  = {'PaperInfo':this.paperDataList,'PaperName':vm.PaperName};
+                var d  = {'PaperInfo':this.paperDataList,'PaperName':vm.PaperName,'TotalScore':vm.TotalScore};
                 tools.postJsonFetch('exam/test/add?XDEBUG_SESSION_START=14658',d,function (data) {
                     if(data.res === true){
                         tools.warningC("提示",data.msg);
@@ -503,6 +516,7 @@
             },
             del(){
                 $("#delModal").modal('hide');
+                vm.TotalScore -= vm.info.Num * vm.info.ScorePer;
                 this.paperDataList.splice(this.saveIndex,1);
             },
             change(){

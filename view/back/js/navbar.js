@@ -40,20 +40,21 @@ var navbarHtml = "<nav class=\"navbar navbar-default\" role=\"navigation\">\n" +
     "                            <b class=\"caret\"></b>\n" +
     "                        </a>\n" +
     "                        <ul class=\"dropdown-menu\">\n" +
+    "                            <li><span class=\"this_erjicaidan\">-考试设置</span></li>\n" +
+    "                            <li class=\"text-center\"><a href=\"./exam_test_add_paper.html\">考情反馈</a></li>\n" +
+    "                            <li class=\"text-center\"><a href=\"./exam_setting.html\">相关设置</a></li>\n" +
+    "                            <li class=\"divider\"></li>\n" +
     "                            <li><span class=\"this_erjicaidan\">-习题练习</span></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./exam_practice_add_title.html\">添加习题</a></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./exam_practice_list.html\">习题列表</a></li>\n" +
-    "                            <li class=\"text-center\"><a href=\"#\">练习反馈</a></li>\n" +
     "                            <li class=\"divider\"></li>\n" +
     "                            <li><span class=\"this_erjicaidan\">-考前测评</span></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./exam_before_test_add_paper.html\">添加测评</a></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./exam_before_test_paper_list.html\">测评查看</a></li>\n" +
-    "                            <li class=\"text-center\"><a href=\"#\">测评反馈</a></li>\n" +
     "                            <li class=\"divider\"></li>\n" +
     "                            <li><span class=\"this_erjicaidan\">-正式考试</span></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./exam_test_add_paper.html\">添加考试</a></li>\n" +
     "                            <li class=\"text-center\"><a href=\"./exam_test_paper_list.html\">考试查看</a></li>\n" +
-    "                            <li class=\"text-center\"><a href=\"#\">考试反馈</a></li>\n" +
     "                        </ul>\n" +
     "\n" +
     "                    </li>\n" +

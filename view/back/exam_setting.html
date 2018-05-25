@@ -1,0 +1,406 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/25-->
+<!--Content: -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 10px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 10px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+        .btn-set{
+            cursor: pointer;margin-top: 0px;border-top: 0px;padding-top: 0px;margin-left: 0px;border-left: 0px;padding-left: 0px;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考试管理</li>
+        <li class="active">试卷列表</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row" id="setting">
+
+
+
+
+
+    <!--去顶删除模态框-->
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delModalLabel">{{warning.title}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{warning.txt}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="del">确定删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--修改模态框-->
+    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="saveModalLabel" style="font-weight: bold;">详情查看</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="message-save" class="col-form-label">名称:</label>
+                            <input class="form-control" id="message-save" v-model="saveInfo.Name" placeholder="编写名称">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="save"> 确定修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--添加模态框-->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel" style="font-weight: bold;">{{AddTitle}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="message-del" class="col-form-label">名称:</label>
+                            <input class="form-control" id="message-del" v-model="AddInfo.Name" placeholder="编写名称">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="add"> 添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--_________________________________________________-->
+    <div class="col-lg-2 col-lg-offset-2  this_content_background_color">
+        <h3>范围标签<button class="btn btn-warning btn-sm" style="float: right;border-radius: 50%;border: none" v-on:click="addModal('s')">+</button></h3>
+        <table class="table table-hover ">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody v-for="(item, index) in dataList.ScopeList" v-bind:class="'id-' + item.ScopeID">
+            <tr>
+                <td>{{item.ScopeName}}</td>
+                <td>
+                    <button class="btn btn-link btn-set" v-on:click="delModal('s',item.ScopeID,item.ScopeName)">删除</button>
+                    <button class="btn btn-link btn-set" v-on:click="saveModal(1,item.ScopeID,item.ScopeName)">修改</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-lg-2 this_content_background_color">
+        <h3>考点标签<button class="btn btn-warning btn-sm" style="float: right;border-radius: 50%;border: none" v-on:click="addModal('p')">+</button></h3>
+        <table class="table table-hover ">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody v-for="(item, index) in dataList.PointList" v-bind:class="'id-' + item.PointID">
+            <tr>
+                <td>{{item.PointName}}</td>
+                <td>
+                    <button class="btn btn-link btn-set" v-on:click="delModal('p',item.PointID,item.PointName)">删除</button>
+                    <button class="btn btn-link btn-set" v-on:click="saveModal(2,item.PointID,item.PointName)">修改</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-2  this_content_background_color">
+        <h3>难度标签<button class="btn btn-warning btn-sm" style="float: right;border-radius: 50%;border: none" v-on:click="addModal('l')">+</button></h3>
+        <table class="table table-hover ">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody v-for="(item, index) in dataList.LevelList" v-bind:class="'id-' + item.LevelID">
+            <tr>
+                <td>{{item.LevelName}}</td>
+                <td>
+                    <button class="btn btn-link btn-set"  v-on:click="delModal('l',item.LevelID,item.LevelName)">删除</button>
+                    <button class="btn btn-link btn-set" v-on:click="saveModal(3,item.LevelID,item.LevelName)">修改</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-lg-2  this_content_background_color">
+        <h3>题型标签<button class="btn btn-warning btn-sm" style="float: right;border-radius: 50%;border: none" v-on:click="addModal('t')">+</button></h3>
+        <table class="table table-hover ">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody v-for="(item, index) in dataList.TypeList" v-bind:class="'id-' + item.TypeID">
+            <tr>
+                <td>{{item.TypeName}}</td>
+                <td>
+                    <button class="btn btn-link btn-set"  v-on:click="delModal('t',item.TypeID,item.TypeName)">删除</button>
+                    <button class="btn btn-link btn-set" v-on:click="saveModal(4,item.TypeID,item.TypeName)">修改</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./../common/moment.js"></script>
+<script src="./common/nav.js"></script>
+
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+
+<script>
+var vm = new Vue({
+    el:'#setting',
+    data:{
+        warning:{
+            title:"",
+            txt:""
+        },
+        dataList:{},
+        AddTitle:"",
+        AddInfo:{
+            "TypeID":1,
+            "Name":""
+        },
+        Info:{
+            ID:0,
+            TypeID:0
+        },
+        saveInfo:{
+            typeID:0,
+            Name:"",
+            ID:0
+        }
+    },
+    methods:{
+        get(){
+            var d = {};
+            tools.postJsonFetch('exam/setting/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                if(data.res === true){
+                    vm.dataList = data.msg;
+                }else{
+                    tools.warningC("提示",data.msg)
+                }
+            });
+        },
+        addModal(type){
+            if(type === 's'){
+                vm.AddInfo.TypeID = 1;
+                vm.AddTitle = "添加考试范围"
+            }else if(type === 'p'){
+                vm.AddInfo.TypeID = 2;
+                vm.AddTitle = "添加考试考点"
+            }else if(type === 'l'){
+                vm.AddInfo.TypeID = 3;
+                vm.AddTitle = "添加考试难度"
+            }else if(type === 't'){
+                vm.AddInfo.TypeID = 4;
+                vm.AddTitle = "添加考试类型"
+            }
+            $("#addModal").modal('show');
+        },
+        add(){
+            var d = {"TypeID":vm.AddInfo.TypeID,"Name":vm.AddInfo.Name};
+            tools.postJsonFetch('exam/setting/set?XDEBUG_SESSION_START=14658',d,function (data) {
+                if(data.res === true){
+                    $("#addModal").modal('hide');
+                    tools.warning("提示","添加成功(点击鼠标消失)");
+                    setTimeout("window.location.href = './exam_setting.html';",2000);
+                }else{
+                    $("#addModal").modal('hide');
+                    tools.warningC("提示",data.msg)
+                }
+            });
+        },
+        delModal(type,id,Name){
+            vm.warning.title = "提示";
+            vm.Info.ID = id;
+            if(type === 's'){
+                vm.warning.txt = "确定删除范围标签"+Name;
+                vm.Info.TypeID = 1;
+            }else if(type === 'p'){
+                vm.warning.txt = "确定删除考点标签"+Name;
+                vm.Info.TypeID = 2;
+            }else if(type === 'l'){
+                vm.warning.txt = "确定删除难度标签"+Name;
+                vm.Info.TypeID = 3;
+            }else if(type === 't'){
+                vm.warning.txt = "确定删除题型标签"+Name;
+                vm.Info.TypeID = 4;
+            }
+            $("#delModal").modal('show');
+        },
+        del(){
+            var d = {"TypeID":vm.Info.TypeID,"ID":vm.Info.ID};
+            tools.postJsonFetch('exam/setting/del?XDEBUG_SESSION_START=14658',d,function (data) {
+                if(data.res === true){
+                    $("#delModal").modal('hide');
+                    tools.warning("提示","删除成功(点击鼠标消失)");
+                    setTimeout("window.location.href = './exam_setting.html';",2000);
+                }else{
+                    $("#delModal").modal('hide');
+                    tools.warningC("提示",data.msg)
+                }
+            });
+        },
+        saveModal(type,id,name){
+            vm.saveInfo.TypeID = type;
+            vm.saveInfo.Name = name;
+            vm.saveInfo.ID = id;
+            $("#saveModal").modal('show');
+        },
+        save(){
+            var d = {"TypeID":vm.saveInfo.TypeID,"ID":vm.saveInfo.ID,"Name":vm.saveInfo.Name};
+            tools.postJsonFetch('exam/setting/save?XDEBUG_SESSION_START=14658',d,function (data) {
+                if(data.res === true){
+                    $("#saveModal").modal('hide');
+                    tools.warning("提示","修改成功(点击鼠标消失)");
+                    setTimeout("window.location.href = './exam_setting.html';",2000);
+                }else{
+                    $("#saveModal").modal('hide');
+                    tools.warningC("提示",data.msg)
+                }
+            });
+        }
+
+    }
+});
+vm.get();
+</script>
+</body>

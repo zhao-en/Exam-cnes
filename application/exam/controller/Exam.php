@@ -17,8 +17,8 @@ use think\Exception;
 
 class Exam extends Controller
 {
-    function add($PaperInfo=null , $PaperName=null,$BetweenTime=null,$LengthTime=null){
-        if(!$this->testParams([$PaperName , $PaperInfo , $BetweenTime , $LengthTime])){
+    function add($PaperInfo=null , $PaperName=null,$BetweenTime=null,$LengthTime=null,$TotalScore=null){
+        if(!$this->testParams([$PaperName , $PaperInfo , $BetweenTime , $LengthTime , $TotalScore])){
             return $this->falseMsg("请填入完整数据");
         }
 
@@ -67,7 +67,8 @@ class Exam extends Controller
             "CTime"=>$NTime,
             "STime"=>$StartTime,
             "ETime"=>$EndTime,
-            "LTime"=>$LengthTime
+            "LTime"=>$LengthTime,
+            "TotalScore"=>$TotalScore
         ]);
 
         if($res == 1){
@@ -83,6 +84,7 @@ class Exam extends Controller
         $res["PointID"] = $data["PointID"];
         $res["LevelID"] = $data["LevelID"];
         $res["Num"] = $data["Num"];
+        $res["ScorePer"] = $data["ScorePer"];
 
         return $res;
     }
@@ -119,7 +121,7 @@ class Exam extends Controller
             $L = Db::table('cnes_paper_bank')->alias('pb')
                 ->join('cnes_user u','u.UserID = pb.CUID')->page($P,$N)
                 ->field(
-                    'pb.PIID , pb.TypeID , pb.CTInfo , pb.JTInfo , pb.QTInfo , pb.PName , pb.CTime , pb.STime , pb.ETime , LTime , u.Name as UserName , u.UserID'
+                    'pb.PIID , pb.TypeID , pb.CTInfo , pb.JTInfo , pb.QTInfo , pb.PName , pb.CTime , pb.STime , pb.ETime ,cnes_paper_bank.TotalScore, LTime , u.Name as UserName , u.UserID'
                 )->where(['pb.IsDel'=>0,'pb.TypeID'=>2])->select();
             //组装字典
             $PointList = Redisc::hGetAll('cnes_point_list');

@@ -117,6 +117,8 @@
                                 <th>难度</th>
                                 <th>考点</th>
                                 <th>数量</th>
+                                <th>分值/题</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -125,6 +127,7 @@
                                 <td>{{item.LevelName}}</td>
                                 <td>{{item.PointName}}</td>
                                 <td>{{item.Num}}</td>
+                                <td>{{item.ScorePer}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -139,6 +142,7 @@
                                 <th>难度</th>
                                 <th>考点</th>
                                 <th>数量</th>
+                                <th>分值/题</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -147,6 +151,7 @@
                                 <td>{{item.LevelName}}</td>
                                 <td>{{item.PointName}}</td>
                                 <td>{{item.Num}}</td>
+                                <td>{{item.ScorePer}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -161,6 +166,7 @@
                                 <th>难度</th>
                                 <th>考点</th>
                                 <th>数量</th>
+                                <th>分值/题</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -169,6 +175,7 @@
                                 <td>{{item.LevelName}}</td>
                                 <td>{{item.PointName}}</td>
                                 <td>{{item.Num}}</td>
+                                <td>{{item.ScorePer}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -214,7 +221,7 @@
             <tr v-for="(item, index) in dataList" v-bind:class="'id-' + item.NoticeID">
                 <td>{{index+1}}</td>
                 <td>{{item.PName}}</td>
-                <td>100</td>
+                <td>{{item.TotalScore}}</td>
                 <td>{{item.UserName}}</td>
                 <td>{{item.CTime|dateFormat}}</td>
                 <td><a style="cursor: pointer" v-on:click="delModal(index)">删除</a>&nbsp
