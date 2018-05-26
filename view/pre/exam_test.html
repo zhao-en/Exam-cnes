@@ -115,7 +115,7 @@
                 <td>{{item.STime|dateFormat}}--{{item.ETime|dateFormat}}</td>
                 <td>
                     <div>
-                        <a style="cursor: pointer" v-on:click="startModal(item.PIID)">开始测试</a>
+                        <a style="cursor: pointer" v-on:click="startModal(item.PIID , index)">开始测试</a>
                     </div>
                 </td>
             </tr>
@@ -229,9 +229,16 @@
         },
         methods:{
 
-            startModal(PIID){
-                $("#startModal").modal('show');
-                vm.paperID = PIID;
+            startModal(PIID , index){
+                var d = {"STime":vm.dataList[index].STime,"ETime":vm.dataList[index].ETime};
+                tools.postJsonFetch('exam/student_exam/canExam?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        $("#startModal").modal('show');
+                        vm.paperID = PIID;
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
             },
             start(){
                 window.location.href = "./exam_test_paper.html?PIID="+vm.paperID;

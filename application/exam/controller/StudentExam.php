@@ -66,9 +66,19 @@ class StudentExam extends Controller
      */
     function getPaperInfo($PIID=null){
         try{
+
+
+
+
             //获取试卷条件信息 测试 PIID
             $L = Db::table('cnes_paper_bank')->alias('pr')->where(["PIID"=>$PIID])->select()[0];
 
+            //查看是否在规定时间内
+            $NTime = time();
+
+            if(!($NTime >= $L['STime'] && $NTime <= $L['ETime'])){
+                return $this->falseMsg("不在考试时间段内");
+            }
             //解析条件
             $L['CTInfo'] =  json_decode($L['CTInfo'],true);
             $L['JTInfo'] =  json_decode($L['JTInfo'],true);
@@ -306,6 +316,17 @@ class StudentExam extends Controller
             return $this->trueMsg(["L"=>$L,'P'=>intval($P),'N'=>$N,'T'=>$T]);
         }catch (Exception $e){
             return $e->getMessage();
+        }
+    }
+
+    function canExam($STime=null , $ETime=null){
+        $NTime = time();
+        if(!$this->testParams([$STime , $ETime])){
+            return $this->falseMsg("不在考试区间内");
+        }else if(!($STime < $NTime && $ETime > $NTime)){
+            return $this->falseMsg("不在考试区间内");
+        }else{
+            return $this->trueMsg("");
         }
     }
 
