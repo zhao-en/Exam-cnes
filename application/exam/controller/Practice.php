@@ -50,7 +50,7 @@ class Practice extends Controller
             $type = $type[count($type) - 1];
             $src = 'exam_'.$NTime.'.'.$type;
             //存储图片
-            move_uploaded_file($_FILES["SrcUrl"]["tmp_name"], __IMG__ ."examimg/". $src);
+            move_uploaded_file($_FILES["SrcUrl"]["tmp_name"], __IMG__ ."examing/". $src);
         }
 
         //存储数据库

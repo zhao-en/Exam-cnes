@@ -40,16 +40,16 @@ var navbarHtml = '<nav class="navbar navbar-default" role="navigation">\n' +
     '                        </a>\n' +
     '                        <ul class="dropdown-menu">\n' +
     '                            <li><span class="this_erjicaidan">-习题练习</span></li>\n' +
-    '                            <li class="text-center"><a href="#">进行练习</a></li>\n' +
-    '                            <li class="text-center"><a href="#">习题收藏</a></li>\n' +
+    '                            <li class="text-center"><a href="./exam_practice.html">进行练习</a></li>\n' +
+    '                            <li class="text-center"><a href="./exam_practice_records.html">习题记录</a></li>\n' +
     '                            <li class="divider"></li>\n' +
     '                            <li><span class="this_erjicaidan">-考前测评</span></li>\n' +
-    '                            <li class="text-center"><a href="#">进行测评</a></li>\n' +
-    '                            <li class="text-center"><a href="#">测评记录</a></li>\n' +
+    '                            <li class="text-center"><a href="./exam_before_test.html">进行测评</a></li>\n' +
+    '                            <li class="text-center"><a href="./exam_before_test_records.html">测评记录</a></li>\n' +
     '                            <li class="divider"></li>\n' +
     '                            <li><span class="this_erjicaidan">-正式考试</span></li>\n' +
-    '                            <li class="text-center"><a href="#">进行考试</a></li>\n' +
-    '                            <li class="text-center"><a href="#">考试记录</a></li>\n' +
+    '                            <li class="text-center"><a href="./exam_test.html">进行考试</a></li>\n' +
+    '                            <li class="text-center"><a href="./exam_test_records.html">考试记录</a></li>\n' +
     '                        </ul>\n' +
     '\n' +
     '                    </li><li><a class="btn btn-link" href="./down_files_list.html">资料下载</a></li>\n' +

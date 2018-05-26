@@ -130,27 +130,14 @@
     </ol>
 </div>
 <!--个人信息内容-->
-<div class="row">
+<div class="row" id="ps">
     <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12">
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">范围选择</span>
-                    <select class="form-control" name="fanwei" id="fanwei" style="width: 70%;display: inline">
-                        <option>第1章&nbsp;概述</option>
-                        <option>第2章&nbsp;物理层</option>
-                        <option>第3章&nbsp;数据链路层</option>
-                        <option>第4章&nbsp;网络层</option>
-                        <option>第5章&nbsp;运输层</option>
-                        <option>第6章&nbsp;应用层</option>
-                        <option>第7章&nbsp;网络安全</option>
-                        <option>第8章&nbsp;因特网上的音频/视频服务</option>
-                        <option>第9章&nbsp;无线网络和移动网络</option>
-                        <option>第10章&nbsp;下一代因特网</option>
-                        <option>CCNA</option>
-                        <option>CCNP</option>
-                        <option>HCNA</option>
-                        <option>HCNP</option>
+                    <select class="form-control" name="ScopeList" id="ScopeList" v-model="setInfo.ScopeID" style="width: 70%;display: inline">
+                        <option v-for="(item,index) in InfoList.ScopeList" v-bind:value="item.ScopeID">{{item.ScopeName}}</option>
                     </select>
                     <div class="this_checkbox" >
                         <span><input id="checkbox1" type="checkbox" checked><label for="checkbox1" ></label></span>
@@ -159,10 +146,8 @@
                 <br>
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">题型选择</span>
-                    <select class="form-control" name="tixing" id="tixing" style="width: 70%;display: inline">
-                        <option>选择题目</option>
-                        <option>问答题目</option>
-                        <option>判断题目</option>
+                    <select class="form-control" name="TypeList" id="TypeList" v-model="setInfo.TypeID" style="width: 70%;display: inline">
+                        <option v-for="(item,index) in InfoList.TypeList" v-bind:value="item.TypeID">{{item.TypeName}}</option>
                     </select>
                     <div class="this_checkbox" >
                         <span><input id="checkbox2" type="checkbox" checked><label for="checkbox2" ></label></span>
@@ -171,10 +156,8 @@
                 <br>
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">考点选择</span>
-                    <select class="form-control" name="zhishidian" id="zhishidian" style="width: 70%;display: inline">
-                        <option>路由</option>
-                        <option>交换机</option>
-                        <option>IP分配</option>
+                    <select class="form-control" name="PointList" id="PointList" v-model="setInfo.PointID" style="width: 70%;display: inline">
+                        <option v-for="(item,index) in InfoList.PointList" v-bind:value="item.PointID">{{item.PointName}}</option>
                     </select>
                     <div class="this_checkbox" >
                         <span><input id="checkbox3" type="checkbox" checked><label for="checkbox3" ></label></span>
@@ -183,10 +166,8 @@
                 <br>
                 <div class="col-lg-12  input-group">
                     <span class="input-group-addon">难度系数</span>
-                    <select class="form-control" name="nanduxishu" id="nanduxishu" style="width: 70%;display: inline">
-                        <option>高</option>
-                        <option>中</option>
-                        <option>低</option>
+                    <select class="form-control" name="LevelList" id="LevelList" v-model="setInfo.LevelID"  style="width: 70%;display: inline">
+                        <option v-for="(item,index) in InfoList.LevelList" v-bind:value="item.LevelID">{{item.LevelName}}</option>
                     </select>
                     <div class="this_checkbox" >
                         <span><input id="checkbox4" type="checkbox" checked><label for="checkbox4" ></label></span>
@@ -194,7 +175,7 @@
                 </div>
                 <br>
                 <div class="col-lg-12 text-right">
-                    <button class="btn btn-info">开始练习</button>
+                    <button class="btn btn-info" v-on:click="start">开始练习</button>
                 </div>
             </div>
         </div>
@@ -219,3 +200,52 @@
 <!--引入公共css-->
 <link rel="stylesheet" href="css/common.css">
 <script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./../common/moment.js"></script>
+<script src="./common/nav.js"></script>
+
+
+<script>
+    var vm = new Vue({
+        el:"#ps",
+        data:{
+            InfoList:{},
+            setInfo:{
+                ScopeID:1,
+                TypeID:1,
+                PointID:1,
+                LevelID:1
+            }
+        },
+
+        methods:{
+
+            start(){
+                if(vm.setInfo.TypeID === 1){
+                    window.location.href = './exam_practice_xuanze_write.html?ScopeID='+vm.setInfo.ScopeID+'&PointID='+vm.setInfo.PointID+'&LevelID='+vm.setInfo.LevelID+'&TypeID='+vm.setInfo.TypeID;
+                }else if(vm.setInfo.TypeID === 2){
+                    window.location.href = './exam_practice_panduan_write.html?ScopeID='+vm.setInfo.ScopeID+'&PointID='+vm.setInfo.PointID+'&LevelID='+vm.setInfo.LevelID+'&TypeID='+vm.setInfo.TypeID;
+                }else if(vm.setInfo.TypeID === 3){
+                    window.location.href = './exam_practice_jianda_write.html?ScopeID='+vm.setInfo.ScopeID+'&PointID='+vm.setInfo.PointID+'&LevelID='+vm.setInfo.LevelID+'&TypeID='+vm.setInfo.TypeID;
+                }
+            },
+            /**
+             * 进行项目的初始化
+             * 范围选择 题型选择 考点选择 难度系数选择
+             */
+            get(){
+                var d = {};
+                tools.postJsonFetch('exam/setting/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        vm.InfoList = data.msg;
+                    }else{
+                        tools.warningC("提示",data.msg)
+                    }
+                });
+            }
+        }
+    });
+    vm.get();
+</script>
+</body>
