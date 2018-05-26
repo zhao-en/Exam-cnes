@@ -276,12 +276,14 @@ class StudentTest extends Controller
         try{
             //统计数目 TODO
             $userInfo = Redisc::hGetAll(cookie('cnes'));
-            $T = Db::table('cnes_test_record')->alias('tr')->where(['UserID'=>2/*$userInfo["UserID"]*/])->count();
+            $T = Db::table('cnes_test_record')->alias('tr')
+                ->join('cnes_paper_bank pb','pb.PIID = tr.PIID')
+                ->where(['UserID'=>2/*$userInfo["UserID"]*/,"pb.TypeID"=>1])->count();
             //数据查询
             $L = Db::table('cnes_test_record')->alias('tr')
                 ->join('cnes_paper_bank pb','pb.PIID = tr.PIID')
                 ->page($P,$N)
-                ->where(['UserID'=>2/*$userInfo["UserID"]*/])
+                ->where(['UserID'=>2/*$userInfo["UserID"]*/,"pb.TypeID"=>1])
                 ->field('pb.PIID , pb.PName , tr.UpTime , tr.CTScore , tr.STScore , tr.RecordID')
                 ->select();
 //            $st['LevelList'] = Redisc::hGetAll('cnes_level_list');

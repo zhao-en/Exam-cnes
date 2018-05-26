@@ -55,89 +55,86 @@
 
 
 
-
-
-
-
 <!--面包屑导航-->
 <div class="row">
     <ol class="breadcrumb">
-        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人信息</li>
-        <li class="active">信息查看</li>
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考试管理</li>
+        <li class="active">习题列表</li>
     </ol>
 </div>
-<!--个人信息内容-->
-<div class="row">
+<!--习题列表-->
+<div class="row" id="tl">
+
+
+
+    <!--去顶删除模态框-->
+    <div class="modal fade" id="startModal" tabindex="-1" role="dialog" aria-labelledby="startModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #3091f2;">
+                    <h5 class="modal-title"  id="startModalLabel">测试规章</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    一、考生有下列行为之一的，取消该科考试成绩。<br>                1．携带规定以外的物品进入试室或者未放在指定位置的；<br>                2．未在规定的座位参加考试的；<br>                3．考试开始信号发出前答题的；<br>                4．考试结束信号发出后继续答题的；<br>                5．在考试过程中旁窥、交头接耳、互打暗号或者手势的；<br>                6．在考场或者教育考试机构禁止的范围内，喧哗、吸烟或者实施其他影响考场秩序的行为的；<br>                7．未经考试工作人员同意在考试过程中擅自离开试室的；<br>                8．将试卷、答卷(含答题卡、答题纸等，下同)、草稿纸等考试用纸带出试室的；<br>                9．用规定以外的笔或者纸答题的；<br>                10．在试卷规定以外的地方书写姓名、考号或者以其他方式在答卷上标记信息的；<br>                11．其他违反考场规则但尚未构成作弊行为的。<br>                二、考生有下列行为之一的，取消当次报名参加考试的各科考试成绩。<br>                1．携带与考试内容相关的文字材料或者存储有与考试内容相关资料的电子设备参加考试的；<br>                2．在答卷上填写与本人身份不符的姓名、考号等信息的；<br>                3．在考试过程中使用通讯设备的；<br>                4．其他应认定作弊的行为。<br>                三、考生有下列行为之一的，取消当次报名参加考试的各科考试成绩，延迟毕业时间一年。<br>                1．抄袭或者协助他人抄袭试题答案或者与考试内容相关的资料的；<br>                2．故意销毁试卷、答卷或者考试材料的；<br>                3．传、接物品或者交换试卷、答卷、草稿纸的；<br>                4．评卷过程中被发现同一科目同一试室有两份以上(含两份)答卷答案雷同的；<br>                5．其他应认定作弊的行为。<br>                四、考生有下列行为之一的，取消当次报名参加考试的各科考试成绩，延迟毕业时间两年。<br>                1．抢夺、窃取他人试卷、答卷或者强迫他人为自己抄袭提供方便的；<br>                2．通过伪造证件、证明、档案及其他材料获得考试资格和考试成绩的；<br>                3．考场纪律混乱、考场秩序失控，出现大面积考试作弊现象的；<br>                4．考试工作人员协助实施作弊行为，事后查实的；<br>                5．其他应认定作弊的行为。<br>                五、考生由他人冒名顶替参加考试的，取消当次报名参加考试的各科考试成绩，延迟毕业时间三年。<br>                六、考生有下列行为之一的，应当终止其继续参加本科目考试，其当次报名参加考试的各科考试成绩无效；考生的行为违反《治安管理处罚条例》的，由公安机关进行处理；构成犯罪的，由司法机关依法追究刑事责任。<br>                1．故意扰乱考点、考场、评卷场所等考试工作场所秩序；<br>                2．拒绝、妨碍考试工作人员履行管理职责；<br>                3．威胁、侮辱、诽谤、诬陷考试工作人员或其他考生；<br>                4．其他扰乱考试管理秩序的行为。<br>                七、考生以作弊行为获得的考试成绩并由此取得相应的毕业证书，由省自学考试委员会宣布证书无效，责令收回证书或者予以没收。<br>                八、代替他人或由他人代替参加考试，是在校生的，由所在学校按有关规定严肃处理，直至开除学籍；其他人员，由教育考试机构建议其所在单位给予行政处分，直至开除或解聘，教育考试机构按照作弊行为记录并向有关单位公开其个人基本信息。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">不同意</button>
+                    <button type="button" class="btn btn-primary" v-on:click="start">同意</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
-        <div class="row">
-            <div class="col-lg-12">
-                <table class="table table-hover text-center">
-                    <!--<caption>基本的表格布局</caption>-->
-                    <thead>
-                    <tr>
-                        <th class="col-2 text-center">ID</th>
-                        <th class="col-4 text-center">试卷名称</th>
-                        <th class="col-4 text-center">考试时间</th>
-                        <th class="col-3 text-center">满分</th>
-                        <th class="col-3 text-center">试卷来源</th>
-                        <th class="col-3 text-center">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>期中考试一</td>
-                        <td>2018-5-10 10:00:00</td>
-                        <td>100</td>
-                        <td>自拟</td>
-                        <td><a href="#">开始答题</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>期中考试二</td>
-                        <td>2018-5-5 10:00:00</td>
-                        <td>100</td>
-                        <td>自拟</td>
-                        <td><a href="#">开始答题</a></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>期中考试三</td>
-                        <td>2018-4-25 10:00:00</td>
-                        <td>100</td>
-                        <td>自拟</td>
-                        <td><a href="#">开始答题</a></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>期末考试一</td>
-                        <td>2018-3-21 10:00:00</td>
-                        <td>100</td>
-                        <td>自拟</td>
-                        <td><a href="#">开始答题</a></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>期末考试二</td>
-                        <td>2018-4-21 10:00:00</td>
-                        <td>100</td>
-                        <td>自拟</td>
-                        <td><a href="#">开始答题</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-lg-12 text-right">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
-            </div>
+        <table class="table table-hover ">
+            <caption class="this_ziliaoxiazai">用户信息</caption>
+            <thead>
+            <tr>
+
+                <th>序号</th>
+                <th>试卷名称</th>
+                <th>试卷满分</th>
+                <th>出题人员</th>
+                <th>考试区间</th>
+                <th>考试时长</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, index) in dataList" v-bind:class="'id-' + item.PIID">
+                <td>{{index+1}}</td>
+                <td>{{item.PName}}</td>
+                <td>{{item.TotalScore}}</td>
+                <td>{{item.UserName}}</td>
+                <td>{{item.LTime}}</td>
+                <td>{{item.STime|dateFormat}}--{{item.ETime|dateFormat}}</td>
+                <td>
+                    <div>
+                        <a style="cursor: pointer" v-on:click="startModal(item.PIID)">开始测试</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="">
+            <ul class="pager">
+                <li v-bind:class="prePageClass"><a class="btn" v-on:click="prePage">上一页</a></li>
+                <li v-bind:class="PNO1"><a v-bind:class="'btn' + ' ' + checked1" v-on:click="btnClick(text1)">{{text1}}</a></li>
+                <li v-bind:class="PNO2"><a v-bind:class="'btn' + ' ' + checked2" v-on:click="btnClick(text2)">{{text2}}</a></li>
+                <li v-bind:class="PNO3"><a v-bind:class="'btn' + ' ' + checked3" v-on:click="btnClick(text3)">{{text3}}</a></li>
+                <li v-bind:class="PNO4"><a v-bind:class="'btn' + ' ' + checked4" v-on:click="btnClick(text4)">{{text4}}</a></li>
+                <li v-bind:class="PNO5"><a v-bind:class="'btn' + ' ' + checked5" v-on:click="btnClick(text5)">{{text5}}</a></li>
+                <li v-bind:class="nextPageClass"><a class="btn" v-on:click="nextPage">下一页</a></li>
+                <li class="">跳转</li>
+                <li class=""><input class="" style="border-radius: 5px;width: 50px" v-model="TPage" type="text">页</li>
+                <li class=""><button style="border-radius: 2px" v-on:click="tiaozhuan">确定</button></li>
+            </ul>
         </div>
     </div>
 </div>
@@ -159,6 +156,9 @@
 <!--引入公共css-->
 <link rel="stylesheet" href="css/common.css">
 <script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./common/nav.js"></script>
 
 
 
@@ -169,4 +169,364 @@
 
 
 <!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:'#tl',
+        data:{
+
+            //modal
+            paperID:"",
+
+            warning:{
+                "title":"",
+                "txt":""
+            },
+
+            //数据 需要组合
+            'dataList':{},
+
+            //静态字典表
+            staticList:{},
+
+            'Page':1, //当前页码
+            'TPage':1,//跳转页码
+            'MPage':1,//最大页数
+
+
+            //文本
+            'text1':1,
+            'text2':2,
+            'text3':3,
+            'text4':4,
+            'text5':5,
+
+            //样式 是否可选
+            'prePageClass':'', //上一页class
+            'nextPageClass':'',//下一页class
+            'PNO1':'',//下一页class
+            'PNO2':'',//下一页class
+            'PNO3':'',//下一页class
+            'PNO4':'',//下一页class
+            'PNO5':'',//下一页class
+
+            //每一页几条
+            'N':10,
+
+            //设置选中样式
+            'checked1':'',
+            'checked2':'',
+            'checked3':'',
+            'checked4':'',
+            'checked5':''
+
+
+        },
+        filters:{
+            dateFormat(time){
+                var date = new Date();
+                return tools.formatDate(date,'yyyy-MM-dd hh:mm');
+            }
+        },
+        methods:{
+
+            startModal(PIID){
+                $("#startModal").modal('show');
+                vm.paperID = PIID;
+            },
+            start(){
+                window.location.href = "./exam_test_paper.html?PIID="+vm.paperID;
+            },
+            /**
+             * 获取数据库第一页数据
+             */
+            get(KeyWord,W, P,N){
+                var d = {"KeyWord":KeyWord,"W":{"ID":1},"P":P,"N":N};
+                tools.postJsonFetch('exam/student_exam/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        vm.dataList = data.msg.L;
+                        vm.Page = data.msg.P;
+                        vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                        vm.clear();
+                        vm.setPageBtn();
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
+            },
+            /**
+             * 跳转
+             */
+            tiaozhuan(){
+                if(vm.TPage > vm.MPage){
+                    tools.warningC("提示","当前题目列表最大为"+vm.MPage+"页");
+                }else{
+                    var d = "P="+vm.TPage+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('exam/practice/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = vm.TPage;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+            },
+            /**
+             *下一页
+             */
+            nextPage(){
+                if((vm.Page + 1) <= vm.MPage ){
+                    var d = "P="+(vm.Page +1)+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('exam/practice/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = vm.Page +1;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+            },
+            /**
+             * 上一页
+             */
+            prePage(){
+                if((vm.Page - 1) > 0){
+                    var d = "P="+(vm.Page - 1)+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('exam/practice/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = vm.Page - 1;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+
+            },
+            /**
+             *点击按钮
+             */
+            btnClick(page){
+                if(vm.Page !== page){
+                    var d = "P="+page+"&N="+vm.N+"&W="+[]+"&KeyWord="+[];
+                    tools.postFetch('exam/practice/get?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Page = page;
+                            vm.MPage = Math.ceil(data.msg.T/data.msg.N);
+                            vm.clear();
+                            vm.setPageBtn();
+                        }else{
+                            tools.warningC("提示",data.msg);
+                        }
+                    });
+                }
+
+            },
+
+            /**
+             * 对分页按钮进行调整
+             */
+            setPageBtn(){
+                //Mpage 调整样式
+                if(vm.MPage <= 5){
+                    if(vm.MPage <= 4){
+                        vm.setHidden(5);
+                    }
+                    if(vm.MPage <= 3){
+                        vm.setHidden(4);
+                    }
+                    if(vm.MPage <= 2){
+                        vm.setHidden(3);
+                    }
+                    if(vm.MPage <= 1){
+                        vm.setHidden(2);
+                    }
+                    vm.text1 = 1;
+                    vm.text2 = 2;
+                    vm.text3 = 3;
+                    vm.text4 = 4;
+                    vm.text5 = 5;
+
+                    vm.setCheck(vm.Page);
+                    vm.setDisabled(vm.Page);
+                    if(vm.Page === 1){
+                        vm.setDisabled(-2);
+                    }
+
+                    if(vm.Page >= vm.MPage){
+                        vm.setDisabled(-1);
+                    }
+                }else if(vm.MPage > 5){
+                    if(vm.Page <= 3){ //1 2 3 ... MPage
+                        vm.text1 = 1;
+                        vm.text2 = 2;
+                        vm.text3 = 3;
+                        vm.text4 = '...';
+                        vm.text5 = vm.MPage;
+
+                        vm.setDisabled(vm.Page);
+                        vm.setCheck(vm.Page);
+                        vm.setDisabled(4);
+                        if(vm.Page === 1){
+                            vm.setDisabled(-2);
+                        }
+                    }else if(vm.Page >= (vm.MPage - 2)){ // 1 ... MPage-2 MPage-1 MPage
+                        vm.text1 = 1;
+                        vm.text2 = '...';
+                        vm.text3 = vm.MPage-2;
+                        vm.text4 = vm.MPage-1;
+                        vm.text5 = vm.MPage;
+
+                        vm.setDisabled(5 - (vm.MPage - vm.Page));
+                        vm.setCheck(5 - (vm.MPage - vm.Page));
+                        vm.setDisabled(2);
+                        if(vm.Page === vm.MPage){
+                            vm.setDisabled(-1);
+                        }
+                    }else{ // 1 ... Page ... MPage
+                        vm.text1 = 1;
+                        vm.text2 = '...';
+                        vm.text3 = vm.Page;
+                        vm.text4 = '...';
+                        vm.text5 = vm.MPage;
+
+                        vm.setDisabled(2);
+                        vm.setDisabled(3);
+                        vm.setCheck(3);
+                        vm.setDisabled(4);
+                    }
+                }
+            },
+            /**
+             * hidden
+             */
+            setHidden(id){
+                switch (id){
+                    case 1:
+                        vm.PNO1 = 'hidden';
+                        break;
+                    case 2:
+                        vm.PNO2 = 'hidden';
+                        break;
+                    case 3:
+                        vm.PNO3 = 'hidden';
+                        break;
+                    case 4:
+                        vm.PNO4 = 'hidden';
+                        break;
+                    case 5:
+                        vm.PNO5 = 'hidden';
+                        break;
+                    case -1:
+                        vm.nextPageClass = 'hidden';
+                        break;
+                    case -2:
+                        vm.prePageClass = 'hidden';
+                        break;
+                }
+            },
+            /**
+             * hidden
+             */
+            setDisabled(id){
+                switch (id){
+                    case 1:
+                        vm.PNO1 = 'disabled';
+                        break;
+                    case 2:
+                        vm.PNO2 = 'disabled';
+                        break;
+                    case 3:
+                        vm.PNO3 = 'disabled';
+                        break;
+                    case 4:
+                        vm.PNO4 = 'disabled';
+                        break;
+                    case 5:
+                        vm.PNO5 = 'disabled';
+                        break;
+                    case -1:
+                        vm.nextPageClass = 'disabled';
+                        break;
+                    case -2:
+                        vm.prePageClass = 'disabled';
+                        break;
+                }
+            },
+            /**
+             *
+             */
+            setChecked(){
+                switch (id){
+                    case 1:
+                        vm.PNO1 = 'disabled';
+                        break;
+                    case 2:
+                        vm.PNO2 = 'disabled';
+                        break;
+                    case 3:
+                        vm.PNO3 = 'disabled';
+                        break;
+                    case 4:
+                        vm.PNO4 = 'disabled';
+                        break;
+                    case 5:
+                        vm.PNO5 = 'disabled';
+                        break;
+                    case -1:
+                        vm.nextPageClass = 'disabled';
+                        break;
+                    case -2:
+                        vm.prePageClass = 'disabled';
+                        break;
+                }
+            },
+            clear(){
+                vm.prePageClass = '';
+                vm.nextPageClass = '';
+                vm.PNO1 = '';
+                vm.PNO2 = '';
+                vm.PNO3 = '';
+                vm.PNO4 = '';
+                vm.PNO5= '';
+                vm.checked1 = '';
+                vm.checked2 = '';
+                vm.checked3 = '';
+                vm.checked4 = '';
+                vm.checked5 = '';
+            },
+            setCheck(id){
+                switch (id){
+                    case 1:
+                        vm.checked1 = 'active';
+                        break;
+                    case 2:
+                        vm.checked2 = 'active';
+                        break;
+                    case 3:
+                        vm.checked3 = 'active';
+                        break;
+                    case 4:
+                        vm.checked4 = 'active';
+                        break;
+                    case 5:
+                        vm.checked5 = 'active';
+                        break;
+                }
+            }
+        }
+    });
+    vm.get([],[],1,vm.N);
+</script>
 </body>
