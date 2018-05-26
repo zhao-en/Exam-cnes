@@ -128,8 +128,11 @@
         </div>
     </div>
 
-    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right" v-if="isTesting">
         <button class="btn btn-info" v-on:click="submit">☞交卷</button>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right" v-if="isTesting==false">
+        <a class="btn btn-info" href="./exam_practice_records.html">☞返回</a>
     </div>
 
 </div>
@@ -187,7 +190,8 @@
             imgsObj:{},
             myAnswer:[],
             Code:"",
-            Score:0
+            Score:0,
+            isTesting:true
 
         },
 
@@ -206,22 +210,38 @@
         methods:{
 
             //初始化数据
-            get(){
-                //获取当前url的数据
-                var d = {"ScopeID":tools.getQueryString('ScopeID'),
-                    "PointID":tools.getQueryString('PointID'),
-                    "LevelID":tools.getQueryString('LevelID'),
-                    "TypeID":tools.getQueryString('TypeID'),
-                    "Num":10//tools.getQueryString('Num')
-                };
-                tools.postJsonFetch('exam/Student_Practice/getTitle?XDEBUG_SESSION_START=14658',d,function (data) {
-                    if(data.res === true){
-                        vm.dataList = data.msg.L;
-                        vm.Code = data.msg.Code;
-                    }else{
-                        tools.warningC("提示",data.msg)
-                    }
-                });
+            get() {
+                if (tools.getQueryString('testing') === '0') {
+                    //获取当前url的数据
+                    var d = {"RecordID": tools.getQueryString('RecordID')};
+                    tools.postJsonFetch('exam/Student_Practice/details?XDEBUG_SESSION_START=14658', d, function (data) {
+                        if (data.res === true) {
+                            vm.dataList = data.msg.L;
+                            vm.Score = data.msg.Score;
+                            vm.isSubmit = true;
+                            vm.isTesting = false;
+                        } else {
+                            tools.warningC("提示", data.msg)
+                        }
+                    });
+                } else {
+                    //获取当前url的数据
+                    var d = {
+                        "ScopeID": tools.getQueryString('ScopeID'),
+                        "PointID": tools.getQueryString('PointID'),
+                        "LevelID": tools.getQueryString('LevelID'),
+                        "TypeID": tools.getQueryString('TypeID'),
+                        "Num": 10//tools.getQueryString('Num')
+                    };
+                    tools.postJsonFetch('exam/Student_Practice/getTitle?XDEBUG_SESSION_START=14658', d, function (data) {
+                        if (data.res === true) {
+                            vm.dataList = data.msg.L;
+                            vm.Code = data.msg.Code;
+                        } else {
+                            tools.warningC("提示", data.msg)
+                        }
+                    });
+                }
             },
             //交卷
             submit(){

@@ -77,10 +77,62 @@ class StudentPractice extends Controller
     }
 
     /**
+     * 详情记录查看
+     */
+    function details($RecordID = null){
+
+        try{
+            $L = Db::table('cnes_practice_record')->alias('pr')->where(['RecordID'=>$RecordID/*$userInfo["UserID"]*/])->select();
+
+            if(empty($L)){
+                return $this->falseMsg("请求失败");
+            }
+            $Score = $L[0]['MyScore'];
+            $L = json_decode($L[0]['MyAnswer'],true);
+
+            return $this->trueMsg(["L"=>$L,"Score"=>$Score]);
+        }catch (Exception $e){
+            return $e->getMessage();
+        }
+
+
+
+    }
+
+    /**
      * 查看历史记录
      */
-    function get(){
+    function get($KeyWord = "" , $W = [] , $P = 1 , $N = 10){
 
+        try{
+            //统计数目
+            $userInfo = Redisc::hGetAll(cookie('cnes'));
+            $T = Db::table('cnes_practice_record')->alias('pr')->where(['UserID'=>2/*$userInfo["UserID"]*/])->count();
+            //数据查询
+             $L = Db::table('cnes_practice_record')->alias('t')
+                ->page($P,$N)
+                ->where(['UserID'=>2/*$userInfo["UserID"]*/])->select();
+            $st['LevelList'] = Redisc::hGetAll('cnes_level_list');
+            $st['PointList'] = Redisc::hGetAll('cnes_point_list');
+            $st['ScopeList'] = Redisc::hGetAll('cnes_scope_list');
+            $st['TypeList'] = Redisc::hGetAll('cnes_type_list');
+
+            foreach ($L as $Key => $Value){
+                $L[$Key]['MyAnswer'] = json_decode($Value['MyAnswer'],true);
+                $L[$Key]['TypeID'] = $L[$Key]['MyAnswer'][0]['TypeID'];
+                $L[$Key]['TypeName'] =  $st['TypeList'][$L[$Key]['MyAnswer'][0]['TypeID'] - 1];
+                $L[$Key]['LevelID'] = $L[$Key]['MyAnswer'][0]['LevelID'];
+                $L[$Key]['LevelName'] =  $st['LevelList'][$L[$Key]['MyAnswer'][0]['LevelID'] - 1];
+                $L[$Key]['PointID'] = $L[$Key]['MyAnswer'][0]['PointID'];
+                $L[$Key]['PointName'] =  $st['PointList'][$L[$Key]['MyAnswer'][0]['PointID'] - 1];
+                $L[$Key]['ScopeID'] = $L[$Key]['MyAnswer'][0]['ScopeID'];
+                $L[$Key]['ScopeName'] =  $st['ScopeList'][$L[$Key]['MyAnswer'][0]['ScopeID'] - 1];
+                unset($L[$Key]['MyAnswer']);
+            }
+            return $this->trueMsg(["L"=>$L,'P'=>intval($P),'N'=>$N,'T'=>$T]);
+        }catch (Exception $e){
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -135,7 +187,7 @@ class StudentPractice extends Controller
                 if(($TypeID == 1 || $TypeID == 2) &&trim($RAnswer[$Key]['CKAnswer']) == trim($MyAnswer)){
                     $Score ++;
                 }else{
-                    $Score = "主观题无自动评定";
+                    $Score = "自检";
                 }
             }else{
                 $RAnswer[$Key]['MyAnswer'] = "未填写答案";
@@ -157,6 +209,4 @@ class StudentPractice extends Controller
         }
         return $this->falseMsg("提交失败");
     }
-
-
 }
