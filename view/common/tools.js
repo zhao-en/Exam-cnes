@@ -49,7 +49,7 @@ var tools = new Vue({
          * @returns {boolean}
          */
         isNull(str){
-            return (str === null || str === undefined || str === '')
+            return (str === null || str === undefined || str === '' || str === [])
         },
 
         /**

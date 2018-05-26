@@ -1,6 +1,6 @@
 <!--Author : en_zhao-->
-<!--Date   : 2018/4/26-->
-<!--Content: 考前测评试卷-->
+<!--Date   : 2018/4/25-->
+<!--Content: -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
     <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
     <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
     <!--小图标文件引入-->
-    <link rel="stylesheet" href="./ref/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
     <style>
         /*
          *phone
@@ -24,12 +24,6 @@
             .space_phone{
                 margin: 50px;
             }
-            .this_to_top{
-                position: fixed;
-                bottom: 50px;
-                right: 10px;
-                margin: auto;
-            }
         }
         /*
          * pc
@@ -37,12 +31,6 @@
         @media (min-width:992px){
             .space_pc{
                 margin: 50px;
-            }
-            .this_to_top{
-                position: fixed;
-                bottom: 100px;
-                right: 50px;
-                margin: auto;
             }
         }
         .this_body_background-color{
@@ -55,11 +43,29 @@
             border: 1px solid #eaeaea;
         }
 
+        /**
+         *图片放大缩小样式
+         */
+        .over {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .tempContainer {
+            position: fixed;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            text-align: center;
+            z-index: 101;
+        }
     </style>
 </head>
 <body class="this_body_background-color">
 <!--header-->
-<div class="row this_header" id="this_top"></div>
+<div class="row this_header"></div>
 <!--navbar-->
 <div class="row this_navbar"></div>
 
@@ -71,104 +77,113 @@
 
 
 
+<!--图片放大层-->
+<div class="row">
+    <div>
+        <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+            <div class="over"></div><!--背景层-->
+            <img title="" id="show_lg_img" class="" style="height: 0px;display:none;">
+        </div>
+    </div>
+</div>
+
 
 <!--面包屑导航-->
 <div class="row">
     <ol class="breadcrumb">
         <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考试模块</li>
-        <li class="active">在线测评</li>
+        <li class="">习题练习</li>
+        <li class="">进行练习</li>
+        <li class="active"></li>
     </ol>
 </div>
 <!--个人信息内容-->
-<div class="row">
-    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
-        <div class="row">
-            <div class="col-lg-6"></div>
-            <div class="col-lg-6 text-right"><span style="font-weight: bolder">剩余时间:</span>&nbsp<span style="color: red;">10:26</span></div>
-        </div>
+<div class="row" id="p_xuanze">
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color" v-if="isSubmit">
+        <span style="font-size: large;font-weight: bolder">本次客观题得分:{{Score}}</span>
     </div>
-    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
-        <div class="row">
-            <div class="col-lg-6">
-                <span>1.运输层主要使用的两种协议(多选)</span>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> 传输控制协议TCP
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox"> 用户数据包协议UDP
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox"> 文件上传协议FTP
-                    </label>
-                    <br>
-                    <label>
-                        <input type="checkbox"> 文件上传协议FTP
-                    </label>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="over"></div><!--背景层-->
-                <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
-                    <img src="img/practice_title_img.jpg" title="点击放大图片" class="img-thumbnail" style="height: 100px;">
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color" v-for="(item,index) in dataList"
+         v-bind:id="'id-' + item.TitleID">
 
-    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
-        <div class="row">
+        第{{index + 1}}题：
+        <!--选择-->
+        <div class="row" v-if="item.TypeID==1">
             <div class="col-lg-6">
-                <span>2.计算机网络可以向用户提供哪些服务?</span><br>
+                <span>{{item.Content}}</span>
+                <div class="checkbox" v-bind:id="'xzpd-'+ index">
+                    <div v-for="(itemi,indexi) in item.Options" v-bind:id="'id-options-' + item.TitleID">
+                        <label>
+                            <input type="checkbox" v-bind:value="indexi+1"> {{itemi}}
+                        </label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="over" v-on:click="smaller"></div><!--背景层-->
+                <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+                    <img v-bind:src="'./../img/examing/' + item.SrcUrl" title="点击放大图片" v-bind:id="'img-'+item.TitleID" class="img-thumbnail" style="height: 100px;" v-on:click="lager('img-'+item.TitleID)">
+                </div>
+            </div>
+        </div>
+        <!--判断-->
+        <div class="row" v-if="item.TypeID==2">
+            <div class="col-lg-6">
+                <span>{{item.Content}}</span>
+                <div class="radio" v-bind:id="'xzpd-'+ index">
+                    <label>
+                        <input type="radio" v-bind:name="'select-one-' + index" v-bind:value="1"> 正确
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" v-bind:name="'select-one-' + index" v-bind:value="0"> 错误
+                    </label>
+                    <br>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="over" v-on:click="smaller"></div><!--背景层-->
+                <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+                    <img v-bind:src="'./../img/examing/' + item.SrcUrl" title="点击放大图片" v-bind:id="'img-'+item.TitleID" class="img-thumbnail" style="height: 100px;" v-on:click="lager('img-'+item.TitleID)">
+                </div>
+            </div>
+        </div>
+        <!--问答-->
+        <div class="row" v-if="item.TypeID==3">
+            <div class="col-lg-6">
+                <span>{{item.Content}}</span>
                 <div class="row">
                     <label class="col-lg-12" for="wodedaan">我的答案：</label>
-                    <textarea class="col-lg-12" name="wodedaan" id="wodedaan" cols="30" rows="10"></textarea>
+                    <textarea class="col-lg-12" name="wodedaan" v-bind:id="'id-jianda-' + index" cols="30" rows="10"></textarea>
                 </div>
             </div>
-            <div class="col-lg-6 text-center">
-                <div class="over"></div><!--背景层-->
+            <div class="col-lg-6">
+                <div class="over" v-on:click="smaller"></div><!--背景层-->
                 <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
-                    <img src="img/practice_title_img.jpg" title="点击放大图片" class="img-thumbnail" style="height: 100px;">
+                    <img v-bind:src="'./../img/examing/' + item.SrcUrl" title="点击放大图片" v-bind:id="'img-'+item.TitleID" class="img-thumbnail" style="height: 100px;" v-on:click="lager('img-'+item.TitleID)">
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
-        <div class="col-lg-6">
-            <span>3.运输层主要使用的两种协议(多选)</span>
-            <div class="checkbox">
-                <label>
-                    <input type="radio"> 对
-                </label>
-                <br>
-                <label>
-                    <input type="radio"> 错
-                </label>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="over"></div><!--背景层-->
-            <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
-                <img src="img/practice_title_img.jpg" title="点击放大图片" class="img-thumbnail" style="height: 100px;">
+        <div class="col-lg-8 col-lg-offset-2 this_content_background_color" v-if="isSubmit">
+            <span style="color: red">我的答案:</span><span>{{item.MyAnswer}}</span><br>
+            <span style="color: red">正确答案:</span><span>{{item.CKAnswer}}</span><br>
+            <span style="color: red">答案解析:</span>
+            <div>
+                {{item.JXAnswer}}
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right">
-        <button class="btn btn-info">☞交卷</button>
+
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right" v-if="isTesting">
+        <button class="btn btn-info" v-on:click="submit">☞交卷</button>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right" v-if="isTesting==false">
+        <a class="btn btn-info" href="./exam_before_test_records.html">☞返回</a>
     </div>
 
 </div>
-<!--锚点to top-->
-<div class="row">
-    <div class="this_to_top">
-        <a class="btn btn-info" href="#this_top"><span><i class="icon iconfont icon-up" href=""></i></span></a>
-    </div>
-</div>
-<!--占位-->
 <div class="space_pc space_phone">&nbsp</div>
+
 
 
 
@@ -187,6 +202,11 @@
 <!--引入公共css-->
 <link rel="stylesheet" href="css/common.css">
 <script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./../common/moment.js"></script>
+<script src="./common/nav.js"></script>
+
 
 
 
@@ -197,4 +217,187 @@
 
 
 <!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:"#p_xuanze",
+        data:{
+            dataList:{},
+            isSubmit:false,
+            imgsObj:{},
+            myAnswer:[],
+            Code:"",
+            Score:0,
+            isTesting:true
+
+        },
+        methods:{
+
+            //初始化数据
+            get(){
+                if(tools.getQueryString('testing') === '0'){
+                    //获取当前url的数据
+                    var d = {"RecordID":tools.getQueryString('RecordID')};
+                    tools.postJsonFetch('exam/Student_test/details?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Score = data.msg.Score;
+                            vm.isSubmit = true;
+                            vm.isTesting = false;
+                        }else{
+                            tools.warningC("提示",data.msg)
+                        }
+                    });
+                }else{
+                    //获取当前url的数据
+                    var d = {"PIID":tools.getQueryString('PIID')
+                    };
+                    tools.postJsonFetch('exam/student_test/getPaperInfo?XDEBUG_SESSION_START=14658',d,function (data) {
+                        if(data.res === true){
+                            vm.dataList = data.msg.L;
+                            vm.Code = data.msg.Code;
+                        }else{
+                            tools.warningC("提示",data.msg)
+                        }
+                    });
+                }
+
+            },
+            //交卷
+            submit(){
+                var myAnswer =  [[]];
+                var temp = [];
+                //获取用户的答案
+                //选择判断
+                var i = 0;
+                for( i = 0 ; i < vm.dataList.length ; i++){
+                    $('#xzpd-'+ i +' input:checked').each(function () {
+                        temp.push($(this).val());
+                    });
+                    myAnswer[i] = temp.slice(0);
+                    if(myAnswer[i].length === 0){
+                        temp.push($('#id-jianda-'+ i).val());
+                        myAnswer[i] = temp.slice(0);
+                    }
+                    temp.splice(0,temp.length);
+                }
+                //提交数据
+                var d = {"Code":vm.Code,"Answer":myAnswer};
+                tools.postJsonFetch('exam/student_test/submit?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        //展示答案
+                        vm.dataList = data.msg.L;
+                        vm.Score = data.msg.Score;
+                        vm.isSubmit = true;
+                    }else{
+                        tools.warningC("提示",data.msg)
+                    }
+                });
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+            /**
+             * 图片放大处理
+             * @param id
+             */
+            lager(id){
+                var currImg = $("#"+id);
+                coverLayer(1);
+                var tempContainer = $('<div class=tempContainer onclick="smaller()"></div>');//图片容器
+                with(tempContainer){//width方法等同于$(this)
+                    appendTo("body");
+                    var windowWidth=$(window).width();
+                    var windowHeight=$(window).height();
+                    //获取图片原始宽度、高度
+                    var orignImg = new Image();
+                    orignImg.src =currImg.attr("src") ;
+                    var currImgWidth= orignImg.width;
+                    var currImgHeight = orignImg.height;
+                    if(currImgWidth<windowWidth){//为了让图片不失真，当图片宽度较小的时候，保留原图
+                        if(currImgHeight<windowHeight){
+                            var topHeight=(windowHeight-currImgHeight)/2;
+                            if(topHeight>35){/*此处为了使图片高度上居中显示在整个手机屏幕中：因为在android,ios的微信中会有一个title导航，35为title导航的高度*/
+                                topHeight=topHeight-35;
+                                css('top',topHeight);
+                            }else{
+                                css('top',0);
+                            }
+                            html('<img border=0 src=' + currImg.attr('src') + '>');
+                        }else{
+                            css('top',0);
+                            html('<img border=0 src=' + currImg.attr('src') + ' height='+windowHeight+'>');
+                        }
+                    }else{
+                        var currImgChangeHeight=(currImgHeight*windowWidth)/currImgWidth;
+                        if(currImgChangeHeight<windowHeight){
+                            var topHeight=(windowHeight-currImgChangeHeight)/2;
+                            if(topHeight>35){
+                                topHeight=topHeight-35;
+                                css('top',topHeight);
+                            }else{
+                                css('top',0);
+                            }
+                            html('<img border=0 src=' + currImg.attr('src') + ' width='+windowWidth+';>');
+                        }else{
+                            css('top',0);
+                            html('<img border=0 src=' + currImg.attr('src') + ' width='+windowWidth+'; height='+windowHeight+'>');
+                        }
+                    }
+                }
+            },
+            //设置遮罩层
+            coverLayer(tag){
+                with($('.over')){
+                    if(tag===1){
+                        css('height',$(document).height());
+                        css('display','block');
+                        css('opacity',1);
+                        css("background-color","#191919");
+                    }
+                    else{
+                        css('display','none');
+                    }
+                }
+            },
+            smaller(){
+                $('.tempContainer').remove();
+                coverLayer(0);
+            }
+
+        }
+    });
+
+    /**
+     * 缩小图片
+     */
+    function smaller(){
+        $('.tempContainer').remove();
+        coverLayer(0);
+    }
+    function coverLayer(tag){
+        with($('.over')){
+            if(tag===1){
+                css('height',$(document).height());
+                css('display','block');
+                css('opacity',1);
+                css("background-color","#191919");
+            }
+            else{
+                css('display','none');
+            }
+        }
+    };
+
+    vm.get();
+
+</script>
 </body>
