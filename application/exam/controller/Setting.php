@@ -9,6 +9,7 @@
 namespace app\exam\controller;
 
 
+use app\common\controller\Redisc;
 use app\exam\model\TitleLevelStatic;
 use app\exam\model\TitlePointStatic;
 use app\exam\model\TitleScopeStatic;
@@ -43,6 +44,7 @@ class Setting extends Controller
         ]);
 
         if($res == 1){
+            $this->updateRedisc();
             return $this->trueMsg("添加成功");
         }
 
@@ -76,6 +78,7 @@ class Setting extends Controller
             $db = new TitleTypeStatic();
         }
         if($db->save(['IsDel'=>1],[$pk=>$ID]) == 1){
+            $this->updateRedisc();
             return $this->trueMsg("删除成功");
         }
         return $this->falseMsg("删除失败");
@@ -108,6 +111,7 @@ class Setting extends Controller
             $db = new TitleTypeStatic();
         }
         if($db->save(['Name'=>$Name],[$pk=>$ID]) == 1){
+            $this->updateRedisc();
             return $this->trueMsg("修改成功");
         }
         return $this->falseMsg("修改失败");
@@ -125,13 +129,43 @@ class Setting extends Controller
             $ScopeList = Db::table('cnes_title_scope_static')->alias('ss')->field('ss.ScopeID,ss.Name as ScopeName')->where(['IsDel'=>0])->select();
             $TypeList = Db::table('cnes_title_type_static')->alias('ts')->field('ts.TypeID,ts.Name as TypeName')->where(['IsDel'=>0])->select();
 
+//            Redisc::hMSet('cnes_level_list',array_combine(array_column($LevelList,'LevelID'),array_column($LevelList,'LevelName')));
+//            Redisc::hMSet('cnes_point_list',array_combine(array_column($PointList,'PointID'),array_column($PointList,'PointName')));
+//            Redisc::hMSet('cnes_scope_list',array_combine(array_column($ScopeList,'ScopeID'),array_column($ScopeList,'ScopeName')));
+//            Redisc::hMSet('cnes_type_list',array_combine(array_column($TypeList,'TypeID'),array_column($TypeList,'TypeName')));
+
             $L['LevelList'] = $LevelList;
             $L['PointList'] = $PointList;
             $L['ScopeList'] = $ScopeList;
             $L['TypeList'] = $TypeList;
+
+
         }catch (Exception $e){
             return $e->getMessage();
         }
         return $this->trueMsg($L);
+    }
+
+
+    function updateRedisc(){
+
+        try{
+            $LevelList = Db::table('cnes_title_level_static')->alias('ls')->field('ls.LevelID,ls.Name as LevelName')->where(['IsDel'=>0])->select();
+            $PointList = Db::table('cnes_title_point_static')->alias('ps')->field('ps.PointID,ps.Name as PointName')->where(['IsDel'=>0])->select();
+            $ScopeList = Db::table('cnes_title_scope_static')->alias('ss')->field('ss.ScopeID,ss.Name as ScopeName')->where(['IsDel'=>0])->select();
+            $TypeList = Db::table('cnes_title_type_static')->alias('ts')->field('ts.TypeID,ts.Name as TypeName')->where(['IsDel'=>0])->select();
+
+            Redisc::hMSet('cnes_level_list',array_combine(array_column($LevelList,'LevelID'),array_column($LevelList,'LevelName')));
+            Redisc::hMSet('cnes_point_list',array_combine(array_column($PointList,'PointID'),array_column($PointList,'PointName')));
+            Redisc::hMSet('cnes_scope_list',array_combine(array_column($ScopeList,'ScopeID'),array_column($ScopeList,'ScopeName')));
+            Redisc::hMSet('cnes_type_list',array_combine(array_column($TypeList,'TypeID'),array_column($TypeList,'TypeName')));
+
+        }catch (Exception $e){
+            return $this->falseMsg("error");
+        }
+
+
+
+
     }
 }

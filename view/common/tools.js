@@ -7,7 +7,7 @@
 var tools = new Vue({
 
     data:{
-        serverUrl:'http://127.0.0.1/swustcnes/public/index.php/'
+        serverUrl:'http://39.108.224.62/swustcnes/public/index.php/'
     },
 
     methods:{

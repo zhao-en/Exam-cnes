@@ -10,7 +10,10 @@
 // +----------------------------------------------------------------------
 
 // [ 应用入口文件 ]
+//解决跨域问题
+header('Access-Control-Allow-Origin:*');//允许所有来源访问
 
+header('Access-Control-Allow-Method:POST,GET');//允许访问的方式
 
 error_reporting(0);
 
