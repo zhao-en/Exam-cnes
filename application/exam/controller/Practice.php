@@ -9,6 +9,7 @@
 namespace app\exam\controller;
 
 
+use app\common\controller\Excel;
 use app\common\controller\Redisc;
 use think\Controller;
 use app\exam\model\TitleBank as TitleBankModel;
@@ -161,6 +162,88 @@ class Practice extends Controller
             return $this->trueMsg("信息未发生变化");
         }
         return $this->falseMsg("修改失败");
+    }
+
+    function addTilebatch($TypeID=null){
+        //获取当前时间
+        $NTime = time();
+        //参数检测
+        if(!$this->testParams([$TypeID]) || empty($_FILES)){
+            return $this->falseMsg("请填写完整信息");
+        }
+
+        //TODO 文件检测...
+
+        //保存文件
+        $type = explode('.',$_FILES["File"]["name"]);
+        $type = $type[count($type) - 1];
+        $src = 'batch_'.$NTime.'.'.$type;
+        //存储图片
+        $url = __FILES__ . $src;
+        move_uploaded_file($_FILES["File"]["tmp_name"], __FILES__ . $src);
+
+        //解析并存储数据库
+        $data = Excel::readExcel($url);
+        if(!$data['res']){
+            return $this->falseMsg("解析失败");
+        }
+
+        switch ($TypeID){
+            case "1":
+                foreach ($data['data'] as $Key => $Value){
+                    $insData[] = [
+                        "UserID"=>2,
+                        "ScopeID"=>$Value[0],
+                        "LevelID"=>$Value[1],
+                        "PointID"=>$Value[2],
+                        "TypeID"=>1,
+                        "Content"=>$Value[3],
+                        "Options"=>$Value[4],
+                        "CKAnswer"=>$Value[5],
+                        "JXAnswer"=>$Value[6],
+                        "IsMultiSelect"=>$Value[7],
+                        "CTime"=>$NTime
+                    ];
+                }
+                break;
+            case "2":
+                foreach ($data['data'] as $Key => $Value){
+                    $insData[] = [
+                        "UserID"=>2,
+                        "ScopeID"=>$Value[0],
+                        "LevelID"=>$Value[1],
+                        "PointID"=>$Value[2],
+                        "TypeID"=>2,
+                        "Content"=>$Value[3],
+                        "CKAnswer"=>$Value[4],
+                        "JXAnswer"=>$Value[5],
+                        "CTime"=>$NTime
+                    ];
+                }
+                break;
+            case "3":
+                foreach ($data['data'] as $Key => $Value){
+                    $insData[] = [
+                        "UserID"=>2,
+                        "ScopeID"=>$Value[0],
+                        "LevelID"=>$Value[1],
+                        "PointID"=>$Value[2],
+                        "TypeID"=>3,
+                        "Content"=>$Value[3],
+                        "CKAnswer"=>$Value[4],
+                        "JXAnswer"=>$Value[5],
+                        "CTime"=>$NTime
+                    ];
+                }
+                break;
+        }
+
+        $userInfo = Redisc::hGetAll(cookie('cnes'));
+        $res = Db::table('cnes_title_bank')->insertAll(($insData));
+        if($res >= 1){
+            return $this->trueMsg("题目添加成功");
+        }
+        return $this->falseMsg("题目添加失败");
     }
 
 

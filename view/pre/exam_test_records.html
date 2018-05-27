@@ -80,9 +80,11 @@
                     <form>
                         <div class="form-group">
                             <label class="col-form-label" style="width: 90px">客观题分数:</label>{{info.STScore}}<br><br>
-                            <label class="col-form-label" style="width: 90px">主观题分数:</label>待评审<br><br>
-                            <label class="col-form-label" style="width: 90px">总  分   :</label>待评审<br><br>
-                            <label class="col-form-label" style="width: 90px">正 确  率:</label>待评审<br><br>
+                            <label class="col-form-label" style="width: 90px">主观题分数:</label><span v-if="info.OTScore == null">待评审</span>
+                            <span v-if="info.OTScore != null">{{info.OTScore}}</span>
+                            <br><br>
+                            <label class="col-form-label" style="width: 90px">总  分   :</label><span v-if="info.OTScore == null">待评审</span>
+                            <span v-if="info.OTScore != null">{{info.CTScore}}</span><br><br>
                         </div>
                     </form>
                 </div>

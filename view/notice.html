@@ -138,8 +138,13 @@
                 </h3>
             </div>
             <!--最新的三个公告-->
-            <div class="panel-body"  v-html="notice_latest_three_content">
-                <!--最新公告content-->
+            <div class="panel-body" id="test">
+                <a href="#" style="font-size: medium">{{dataList[0].Title}}</a>
+                {{dataList[0].Content}}<br><br>
+                <a href="#" style="font-size: medium">{{dataList[1].Title}}</a>
+                {{dataList[1].Content}}<br><br>
+                <a href="#" style="font-size: medium">{{dataList[2].Title}}</a>
+                {{dataList[2].Content}}<br><br>
             </div>
             <div class="panel-footer text-right">
                 <a class="btn btn-info" href="notice_list.html" >更多</a>
@@ -215,6 +220,54 @@
 <!--vue引入-->
 <script src="ref/vue/vue.js"></script>
 <!--js文件引入-->
-<script src="js/notice.js"></script>
+<link rel="stylesheet" href="css/common.css">
+<script src="./common/modal.js"></script>
+<script src="./common/tools.js"></script>
+<script>
+
+
+
+    $(function(e) {
+        // 轮播参数配置
+        $('.carousel').carousel({
+            interval: 2000
+        })
+    });
+
+    var notice_carousel_v = new Vue({
+        el:'#noticeCarousel',
+        data:{
+            img_1:'./img/silder/img-slider-01.jpg',
+            img_2:'./img/silder/img-slider-02.jpg',
+            img_3:'./img/silder/img-slider-03.jpg',
+            img_4:'./img/silder/img-slider-04.jpg'
+        }
+    });
+
+
+    var vm = new Vue({
+        el:"#notice_content",
+        data:{
+            dataList:{
+
+            }
+        },
+        methods:{
+            get(){
+                tools.postJsonFetch('notice/student_notice/getNewThree?XDEBUG_SESSION_START=14658', '',function (data) {
+                    if (data.res === true) {
+                        vm.dataList = data.msg.L;
+                    } else {
+                        tools.warningC("提示", data.msg)
+                    }
+                });
+            }
+        }
+
+
+    });
+    vm.get();
+
+</script>
 </body>
 </html>

@@ -15,6 +15,7 @@ use app\notice\model\ViewUserNotice;
 use think\console\command\make\Model;
 use think\Controller;
 use think\Db;
+use think\Exception;
 
 class Notice extends Controller
 {
@@ -121,6 +122,16 @@ class Notice extends Controller
                 'T' => null,
             ]
         ];
+    }
+
+    function getNewThree(){
+        try{
+            $L = Db::table('cnes_view_user_notice')->where(['IsDel'=>0])->order('Time')->limit(3)->select();
+            $a = 0;
+
+        }catch (Exception $e){
+
+        }
     }
 
 }

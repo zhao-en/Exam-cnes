@@ -1,0 +1,320 @@
+<!--Author : en_zhao-->
+<!--Date   : 2018/5/1-->
+<!--Content: 后台首页-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWUSTCNES</title>
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--jquery 和 boostarp 引入-->
+    <link href="./../css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
+    <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap-theme.css">
+    <!--小图标文件引入-->
+    <link rel="stylesheet" href="../ref/iconfont/iconfont.css">
+    <style>
+        /*
+         *phone
+         */
+        @media (max-width:992px){
+            .space_phone{
+                margin: 10px;
+            }
+        }
+        /*
+         * pc
+         */
+        @media (min-width:992px){
+            .space_pc{
+                margin: 10px;
+            }
+        }
+        .this_body_background-color{
+            background-color:#f6f6f6;
+        }
+        .this_content_background_color{
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+    </style>
+</head>
+<body class="this_body_background-color">
+<!--header-->
+<div class="row this_header"></div>
+<!--navbar-->
+<div class="row this_navbar"></div>
+
+
+
+
+
+
+
+
+
+
+<!--面包屑导航-->
+<div class="row">
+    <ol class="breadcrumb">
+        <li><span class="this_dangqianweizhi">当前位置:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;后台管理</li>
+        <li class="active">主页</li>
+    </ol>
+</div>
+<!--个人信息内容-->
+<div class="row" id="piyue">
+
+
+
+    <!--去顶删除模态框-->
+    <div class="modal fade" id="tsModal" tabindex="-1" role="dialog" aria-labelledby="tsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tsModalLabel">提示</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    批阅成功
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary" href="./index_index.html">返回</a>
+                    <a type="button" class="btn btn-primary" href="./index_piyue.html">下一题</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <span style="font-size: large;font-weight: bolder">教师主观题评分</span>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color" v-for="(item,index) in dataList">
+
+        第{{index + 1}}题：
+        <!--问答-->
+            <div class="col-lg-6">
+                <span>{{item.Content}}</span>
+                <div class="row">
+                    <label class="col-lg-12" for="wodedaan">学生答案：</label>
+                    <textarea class="col-lg-12" name="wodedaan" v-bind:id="'id-jianda-' + index" v-bind:value="item.MyAnswer" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="over" v-on:click="smaller"></div><!--背景层-->
+                <div class="logoImg amplifyImg"><!--注意：此处的amlifyImg不可少-->
+                    <img v-bind:src="'./../img/examing/' + item.SrcUrl" title="点击放大图片" v-bind:id="'img-'+item.TitleID" class="img-thumbnail" style="height: 100px;" v-on:click="lager('img-'+item.TitleID)">
+                </div>
+            </div>
+            <div class="col-lg-8 this_content_background_color" >
+                <span style="color: red">正确答案:</span><span>{{item.CKAnswer}}</span><br>
+                <span style="color: red">答案解析:</span><span>{{item.JXAnswer}}</span><br>
+                <span style="color: red">题目满分:</span><span>{{item.Score}}</span>
+            </div>
+        <div class="col-lg-8 this_content_background_color" >
+            <form action="">
+                <div class="input-group">
+                    <span class="input-group-btn"><button class="btn btn-default">教师评分</button></span>
+                    <input class="form-control" type="number" id="" v-model="OTScore" placeholder="0">
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color text-right">
+        <button class="btn btn-info" v-on:click="submit">提交</button>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="row this_footer"></div>
+<!--引入 header navbar footer-->
+<script src="js/footer.js"></script>
+<script src="js/header.js"></script>
+<script src="js/navbar.js"></script>
+<!--引入公共css-->
+<link rel="stylesheet" href="css/common.css">
+<script src="./../ref/vue/vue.js"></script>
+<script src="./../common/modal.js"></script>
+<script src="./../common/tools.js"></script>
+<script src="./../common/moment.js"></script>
+<script src="./common/nav.js"></script>
+
+
+
+
+
+
+
+
+
+
+<!--引入其他js-->
+<script>
+    var vm = new Vue({
+        el:"#piyue",
+        data:{
+            dataList:{},
+            STScore:0,
+            OTScore:0,
+            RecordID:0,
+
+        },
+        methods:{
+
+            //初始化数据
+            get(){
+                //获取当前url的数据
+                // var d = {"RecordID":1};//tools.getQueryString('RecordID')
+                tools.postJsonFetch('index/index/getTitle?XDEBUG_SESSION_START=14658','',function (data) {
+                    if(data.res === true){
+                        vm.dataList = data.msg.L;
+                        vm.STScore = data.msg.STScore;
+                        vm.RecordID = data.msg.RecordID;
+                    }else{
+                        tools.warningC("提示",data.msg)
+                    }
+                });
+
+            },
+            //交卷
+            submit(){
+                var d = {"OTScore":vm.OTScore,"STScore":vm.STScore,"RecordID":vm.RecordID};
+                tools.postJsonFetch('index/index/sumbitRes?XDEBUG_SESSION_START=14658',d,function (data) {
+                    if(data.res === true){
+                        $("#tsModal").modal('show');
+                    }else{
+                        tools.warningC("提示",data.msg)
+                    }
+                });
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+            /**
+             * 图片放大处理
+             * @param id
+             */
+            lager(id){
+                var currImg = $("#"+id);
+                coverLayer(1);
+                var tempContainer = $('<div class=tempContainer onclick="smaller()"></div>');//图片容器
+                with(tempContainer){//width方法等同于$(this)
+                    appendTo("body");
+                    var windowWidth=$(window).width();
+                    var windowHeight=$(window).height();
+                    //获取图片原始宽度、高度
+                    var orignImg = new Image();
+                    orignImg.src =currImg.attr("src") ;
+                    var currImgWidth= orignImg.width;
+                    var currImgHeight = orignImg.height;
+                    if(currImgWidth<windowWidth){//为了让图片不失真，当图片宽度较小的时候，保留原图
+                        if(currImgHeight<windowHeight){
+                            var topHeight=(windowHeight-currImgHeight)/2;
+                            if(topHeight>35){/*此处为了使图片高度上居中显示在整个手机屏幕中：因为在android,ios的微信中会有一个title导航，35为title导航的高度*/
+                                topHeight=topHeight-35;
+                                css('top',topHeight);
+                            }else{
+                                css('top',0);
+                            }
+                            html('<img border=0 src=' + currImg.attr('src') + '>');
+                        }else{
+                            css('top',0);
+                            html('<img border=0 src=' + currImg.attr('src') + ' height='+windowHeight+'>');
+                        }
+                    }else{
+                        var currImgChangeHeight=(currImgHeight*windowWidth)/currImgWidth;
+                        if(currImgChangeHeight<windowHeight){
+                            var topHeight=(windowHeight-currImgChangeHeight)/2;
+                            if(topHeight>35){
+                                topHeight=topHeight-35;
+                                css('top',topHeight);
+                            }else{
+                                css('top',0);
+                            }
+                            html('<img border=0 src=' + currImg.attr('src') + ' width='+windowWidth+';>');
+                        }else{
+                            css('top',0);
+                            html('<img border=0 src=' + currImg.attr('src') + ' width='+windowWidth+'; height='+windowHeight+'>');
+                        }
+                    }
+                }
+            },
+            //设置遮罩层
+            coverLayer(tag){
+                with($('.over')){
+                    if(tag===1){
+                        css('height',$(document).height());
+                        css('display','block');
+                        css('opacity',1);
+                        css("background-color","#191919");
+                    }
+                    else{
+                        css('display','none');
+                    }
+                }
+            },
+            smaller(){
+                $('.tempContainer').remove();
+                coverLayer(0);
+            }
+
+        }
+    });
+
+    /**
+     * 缩小图片
+     */
+    function smaller(){
+        $('.tempContainer').remove();
+        coverLayer(0);
+    }
+    function coverLayer(tag){
+        with($('.over')){
+            if(tag===1){
+                css('height',$(document).height());
+                css('display','block');
+                css('opacity',1);
+                css("background-color","#191919");
+            }
+            else{
+                css('display','none');
+            }
+        }
+    };
+
+    vm.get();
+
+</script>
+</body>

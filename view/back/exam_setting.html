@@ -170,12 +170,14 @@
         <table class="table table-hover ">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>名称</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody v-for="(item, index) in dataList.ScopeList" v-bind:class="'id-' + item.ScopeID">
             <tr>
+                <td>{{item.ScopeID}}</td>
                 <td>{{item.ScopeName}}</td>
                 <td>
                     <button class="btn btn-link btn-set" v-on:click="delModal('s',item.ScopeID,item.ScopeName)">删除</button>
@@ -191,12 +193,14 @@
         <table class="table table-hover ">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>名称</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody v-for="(item, index) in dataList.PointList" v-bind:class="'id-' + item.PointID">
             <tr>
+                <td>{{item.PointID}}</td>
                 <td>{{item.PointName}}</td>
                 <td>
                     <button class="btn btn-link btn-set" v-on:click="delModal('p',item.PointID,item.PointName)">删除</button>
@@ -212,12 +216,14 @@
         <table class="table table-hover ">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>名称</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody v-for="(item, index) in dataList.LevelList" v-bind:class="'id-' + item.LevelID">
             <tr>
+                <td>{{item.LevelID}}</td>
                 <td>{{item.LevelName}}</td>
                 <td>
                     <button class="btn btn-link btn-set"  v-on:click="delModal('l',item.LevelID,item.LevelName)">删除</button>
@@ -233,12 +239,14 @@
         <table class="table table-hover ">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>名称</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody v-for="(item, index) in dataList.TypeList" v-bind:class="'id-' + item.TypeID">
             <tr>
+                <td>{{item.TypeID}}</td>
                 <td>{{item.TypeName}}</td>
                 <td>
                     <button class="btn btn-link btn-set"  v-on:click="delModal('t',item.TypeID,item.TypeName)">删除</button>

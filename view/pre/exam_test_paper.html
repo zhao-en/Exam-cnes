@@ -283,10 +283,9 @@
                 var d = {"Code":vm.Code,"Answer":myAnswer};
                 tools.postJsonFetch('exam/student_test/submit?XDEBUG_SESSION_START=14658',d,function (data) {
                     if(data.res === true){
-                        //展示答案
-                        vm.dataList = data.msg.L;
-                        vm.Score = data.msg.Score;
-                        vm.isSubmit = true;
+                        tools.warning("提示","提交成功")
+                        setTimeout("window.location.href = './exam_test.html';",3000);
+
                     }else{
                         tools.warningC("提示",data.msg)
                     }

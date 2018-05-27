@@ -231,7 +231,7 @@ class StudentTest extends Controller
             "UpTime"=>$NTime,
             'UserID'=>2,//从当前redis中存储
             'PIID'=>$RAnswer['PIID'],
-            'CTScore'=>$RAnswer['TotalScore'],
+            'CTScore'=>$Score,
 
         ]);
 

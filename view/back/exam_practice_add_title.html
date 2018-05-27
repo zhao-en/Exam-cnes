@@ -167,6 +167,7 @@
 <!--个人信息内容-->
 <div class="row" id="this_content">
     <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <h2>方式一</h2>
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-sm-12 col-xs-12">
                 <div class="col-lg-12  input-group">
@@ -416,6 +417,43 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-8 col-lg-offset-2 this_content_background_color">
+        <h2>方式二</h2>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-default btn-xs" >下载模板(excel)</button>&nbsp;&nbsp;
+                <span><a download="select" href="./../file/model_select.xlsx">选择</a></span>&nbsp;&nbsp;
+                <span><a download="judge" href="./../file/model_judge.xlsx">判断</a></span>&nbsp;&nbsp;
+                <span><a download="question" href="./../file/model_question.xlsx">简答</a></span>&nbsp;&nbsp;<span style="color: red">(注：ID的填写请与“考试”->"相关设置"保持一致)</span>
+            </div>
+            <br>
+            <br>
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-info btn-xs" onclick="javascript:$('#shanchuanwenjian').click();">
+                    上传文件(excel)
+                </button><span>{{fileName}}</span>
+                <input class="hidden" type="file" name="shanchuanwenjian" v-on:change="addExcel"
+                       id="shanchuanwenjian">
+            </div>
+            <br>
+            <br>
+            <div class="col-lg-10 col-lg-offset-2" id="type">
+                <label for="01">选择</label>
+                <input type="radio" name="type" value="1" id="01" checked>
+                <label for="02">判断</label>
+                <input type="radio" name="type" value="2" id="02">
+                <label for="03">简答</label>
+                <input type="radio" name="type" value="3" id="03">
+            </div>
+            <br>
+            <br>
+            <div class="col-lg-10 col-lg-offset-2">
+                <button class="btn btn-info" v-on:click="sumbitExcel">提交试题</button>
+            </div>
+
+        </div>
+
+    </div>
 </div>
 <div class="space_pc space_phone">&nbsp;</div>
 
@@ -477,7 +515,12 @@
             wenda_daanjiexi:'',
 
 
-            src:""
+            src:"",
+
+            //文件名称显示
+            srcfile:'',
+            fileName:""
+
 
         },
         filters:{
@@ -490,6 +533,54 @@
             }
         },
         methods:{
+
+
+            addExcel(){
+                //获取图片的路径，该路径不是图片在本地的路径
+                var obj_doc = $('#shanchuanwenjian');
+                vm.srcfile = obj_doc[0].files[0];
+                var objUrl = tools.getObjectURL(obj_doc[0].files[0]) ;
+                //文件名称显示
+                if (objUrl) {
+                    vm.fileName = vm.srcfile.name;
+                }
+                tools.getImageSize('shanchuanwenjian',function (obj) {
+                    //大小限制
+                    // if(obj.width > 500 || obj.height > 500){
+                    //     tools.warningC("提示","图片上传文件比例不符合规定（height<500且weight<500）");
+                    // }else if(obj.size > 2048){
+                    //     tools.warningC("提示","图片上传文件大于2M");
+                    // }else if(obj.type !== 'jpg' || obj.type !== 'jpeg' || obj.type !== 'JPG' || obj.type !== 'JPEG' ||
+                    //     obj.type !== 'png' || obj.type !== 'PNG'){
+                    //     tools.warningC("提示","图片上传类型错误");
+                    // }
+
+                });
+
+
+            },
+
+            sumbitExcel(){
+
+                //获取题目类型
+                var TypeID = 1;
+                $('#type input:checked').each(function () {
+                    TypeID = $(this).val();
+                });
+
+                var formData = new FormData();
+                formData.append('File', vm.srcfile);
+                formData.append('TypeID', TypeID);
+
+                tools.imgFetch('exam/practice/addTilebatch?XDEBUG_SESSION_START=14658',formData,function (data) {
+                    if(data.res === true){
+                        tools.warningC("提示",data.msg);
+                    }else{
+                        tools.warningC("提示",data.msg);
+                    }
+                });
+            },
+
             /**
              *试题添加
              */

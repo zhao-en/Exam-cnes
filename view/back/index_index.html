@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--jquery 和 boostarp 引入-->
+    <link href="./../css/font-awesome.css" rel="stylesheet">
     <script type="text/javascript" src="../ref/jquery-3.3.1/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="../ref/bootstrap-3.3.7/css/bootstrap.css">
     <script src="../ref/bootstrap-3.3.7/js/bootstrap.js"></script>
@@ -67,7 +68,7 @@
     </ol>
 </div>
 <!--个人信息内容-->
-<div class="row">
+<div class="row" id="back_index">
     <div class="col-lg-8 col-lg-offset-2 this_content_background_color" id="zhuangtai">
 
         <div class="col-lg-6  col-sm-12 col-xs-12">
@@ -81,12 +82,10 @@
 
         </div>
         <hr width="100%" color="red">
-        <div class="col-lg-12  col-sm-12 col-xs-12">
-            您有待批阅试卷 <span style="border-radius: 80px;width:50px;height:50px;background-color:#9acfea;color: red;">6</span><button class="btn btn-info" style="margin-left: 50px">进行处理</button>
+        <div class="col-lg-12  col-sm-12 col-xs-12 text-right">
+            <span style="border-radius: 80px;width:50px;height:50px;background-color:#9acfea;color: red;"></span><button class="btn btn-info" style="margin-left: 50px" v-on:click="piyue">批阅试卷</button>
         </div>
-
     </div>
-
 </div>
 
 
@@ -120,6 +119,18 @@
 <!--引入其他js-->
 <script>
 
+    var vm  = new Vue({
+        el:"#back_index",
+        data:{
+
+        },
+        methods:{
+            piyue(){
+                window.location.href = "./index_piyue.html";
+            }
+        }
+    });
+
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
@@ -146,6 +157,7 @@
     };
 
     myChart.setOption(option, true);
+
 
 </script>
 </body>

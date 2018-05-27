@@ -241,7 +241,7 @@ class StudentExam extends Controller
             "UpTime"=>$NTime,
             'UserID'=>2,//从当前redis中存储
             'PIID'=>$RAnswer['PIID'],
-            'CTScore'=>$RAnswer['TotalScore'],
+            'CTScore'=>$Score,
 
         ]);
 
@@ -294,7 +294,7 @@ class StudentExam extends Controller
                 ->join('cnes_paper_bank pb','pb.PIID = tr.PIID')
                 ->page($P,$N)
                 ->where(['UserID'=>2/*$userInfo["UserID"]*/,"pb.TypeID"=>2])
-                ->field('pb.PIID , pb.PName , tr.UpTime , tr.CTScore , tr.STScore , tr.RecordID')
+                ->field('pb.PIID , pb.PName , tr.UpTime , tr.CTScore , tr.STScore , tr.OTScore,tr.RecordID')
                 ->select();
 //            $st['LevelList'] = Redisc::hGetAll('cnes_level_list');
 //            $st['PointList'] = Redisc::hGetAll('cnes_point_list');

@@ -1,4 +1,8 @@
 <!--Author : en_zhao-->
+<!--Date   : 2018/5/28-->
+<!--Content: -->
+
+<!--Author : en_zhao-->
 <!--Date   : 2018/4/18-->
 <!--Content: 登录主页-->
 
@@ -123,30 +127,30 @@
                 col-sm-4
                 col-xs-12">
         <div class="row input_login_phone input_login">
-                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12">
-                    <h3>身份认证</h3>
-                </div>
-                <br><br><br>
-                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
+            <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12">
+                <h3>管理员登陆</h3>
+            </div>
+            <br><br><br>
+            <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
                             input-group">
-                    <span class="input-group-addon" style="background-color:white;"><i class="icon iconfont icon-zhanghao"></i></span>
-                    <input type="text" class="form-control" v-model="account" placeholder="请输入学号">
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
+                <span class="input-group-addon" style="background-color:white;"><i class="icon iconfont icon-zhanghao"></i></span>
+                <input type="text" class="form-control" v-model="account" placeholder="请输入学号">
+            </div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1
                             input-group">
-                    <span class="input-group-addon" style="background-color:white;"><i class="icon iconfont  icon-mima"></i></span>
-                    <input type="password" class="form-control" v-model="pwd" placeholder="请输入密码">
-                </div>
+                <span class="input-group-addon" style="background-color:white;"><i class="icon iconfont  icon-mima"></i></span>
+                <input type="password" class="form-control" v-model="pwd" placeholder="请输入密码">
+            </div>
 
-                <a class="btn btn-info col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10" v-on:click="submit">登录</a>
+            <a class="btn btn-info col-lg-8 col-lg-offset-2 col-md-6 col-sm-6 col-xs-10" v-on:click="submit">登录</a>
 
-                <div class="col-lg-5 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12">
-                    <span class="btn btn-link"><a href="./register.html">新人注册</a></span>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <span class="btn btn-link"><a href="./find_password.html">忘记密码</a></span>
-                    <span class="btn btn-link"><a href="./logina.html">管理登陆</a></span>
-                </div>
+            <div class="col-lg-5 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12">
+                <span class="btn btn-link"><a href="./register.html">新人注册</a></span>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <span class="btn btn-link"><a href="./find_password.html">忘记密码</a></span>
+                <span class="btn btn-link"><a href="./login.html">学生登陆</a></span>
+            </div>
         </div>
     </div>
 </div>
@@ -182,7 +186,7 @@
                 if(data.res === false){
                     tools.warningC("提示",data.msg);
                 }else{
-                    window.location.href = "./pre/index_index.html";
+                    window.location.href = "./back/index_index.html";
                 }
             }
         }
